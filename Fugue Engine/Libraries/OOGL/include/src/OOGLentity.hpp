@@ -1,10 +1,17 @@
-#ifndef OOGLENTITY_H
-#define OOGLENTITY_H
+//////////////////////////////////////
+//           Entity                 //
+//////////////////////////////////////
+/*
 
-#include "OOGLvec2.h"
-#include "OOGLtexture.h"
-#include "OOGLmodel.h"
-#include "OOGLshader.h"
+*/
+
+#ifndef OOGLENTITY_HPP
+#define OOGLENTITY_HPP
+
+#include "OOGLvec2.hpp"
+#include "OOGLtexture.hpp"
+#include "OOGLmodel.hpp"
+#include "OOGLshader.hpp"
 #include <GLEW\glew.h>
 #include <vector>
 
@@ -14,14 +21,15 @@ namespace oogl
 	{
 	public:
 		Entity();
-		Entity(const Model&, const Texture&, ShaderType);
+		Entity(const Entity&);
+		Entity(const Model&, const Texture&, shaderType);
 		~Entity();
 
 		Entity& operator=(const Entity&);
 		
 		void visible(bool);
 		void swapTexture(const Texture&);
-		void setShader(ShaderType);
+		void setShader(shaderType);
 		void setPosition(const Vec2&);
 		Vec2 getPosition();
 		void translate(const Vec2&);
@@ -38,7 +46,7 @@ namespace oogl
 		Texture texture;
 		Model model;
 
-		UniformData uniformData;
+		uniformData uniforms;
 
 		void draw();
 		bool visibility;

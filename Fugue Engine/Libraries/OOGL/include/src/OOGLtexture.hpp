@@ -1,5 +1,12 @@
-#ifndef OOGLTEXTURE_H
-#define OOGLTEXTURE_H
+//////////////////////////////////////
+//           Texture                //
+//////////////////////////////////////
+/*
+
+*/
+
+#ifndef OOGLTEXTURE_HPP
+#define OOGLTEXTURE_HPP
 
 #include <GLEW\glew.h>
 
@@ -11,6 +18,7 @@ namespace oogl
 		Texture();
 		Texture(const Texture&);
 		Texture(const char*);
+
 		Texture& operator=(const Texture&);
 
 		void bind();

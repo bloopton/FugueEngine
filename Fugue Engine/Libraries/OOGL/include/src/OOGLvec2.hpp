@@ -1,5 +1,12 @@
-#ifndef OOGLVEC2_H
-#define OOGLVEC2_H
+//////////////////////////////////////
+//             Vec2                 //
+//////////////////////////////////////
+/*
+
+*/
+
+#ifndef OOGLVEC2_HPP
+#define OOGLVEC2_HPP
 
 #include <GLEW\glew.h>
 

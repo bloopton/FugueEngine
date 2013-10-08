@@ -1,4 +1,5 @@
-#include "ooglCore.h"
+#include "ooglCore.hpp"
+#include "OOGLshader.hpp"
 #include <GLEW\glew.h>
 
 
@@ -13,18 +14,28 @@ namespace oogl
 		if(glewInit() != GLEW_OK)
 			setupSuccess = false;
 	
+		Shader::setUpShaders();
+
+		setAspectRatio(1, 1);
+
 		return setupSuccess;
 	}
 
 
-	void ooglEnd()
+	void ooglTerminate()
 	{
 		
 	}
 
 
-	void update()
+	void setAspectRatio(float x, float y)
 	{
-	
+		float aspectRatio = x / y;
+		for(int i = 0; i < Shader::defaultShaders.size(); i++)
+		{
+			glUseProgram(Shader::defaultShaders[i].ID);
+			GLuint aspectRatioLocation = glGetUniformLocation(Shader::defaultShaders[i].ID, "aspectRatio");
+			glUniform1f(aspectRatioLocation, aspectRatio);
+		}
 	}
 }

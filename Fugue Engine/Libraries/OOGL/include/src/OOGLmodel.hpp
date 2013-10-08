@@ -1,17 +1,21 @@
-#ifndef OOGLMODEL_H
-#define OOGLMODEL_H
+#ifndef OOGLMODEL_HPP
+#define OOGLMODEL_HPP
 
-#include "OOGLvec2.h"
+//////////////////////////////////////
+//           Model                  //
+//////////////////////////////////////
+/*
+
+*/
+
+#include "OOGLvec2.hpp"
 #include <GLEW\glew.h>
 #include <vector>
 
 namespace oogl
 {
-	class Entity;
-
 	class Model
 	{
-		friend class Entity;
 
 	public:
 		Model();
@@ -21,6 +25,9 @@ namespace oogl
 		Model(const std::vector<Vec2>&, const std::vector<Vec2>&);
 
 		Model& operator=(const Model&);
+
+		int getDataSize();
+		void genVertexArray(GLuint&, GLuint&);
 
 	private:
 		std::vector<GLfloat> data;

@@ -1,11 +1,10 @@
-#include "OOGLshader.h"
-#include "shaders.h"
+#include "OOGLshader.hpp"
+#include "shaders.hpp"
 
 
 namespace oogl
 {
 	std::vector<Shader> Shader::defaultShaders;
-	bool Shader::defaultShadersCreated = false;
 
 
 	Shader::Shader() {}
@@ -37,14 +36,8 @@ namespace oogl
 	}
 
 
-	Shader::Shader(ShaderType index)
+	Shader::Shader(shaderType index)
 	{
-		if(defaultShadersCreated == false)
-		{
-			defaultShadersCreated = true;
-			setUpShaders();
-		}
-
 		*this = defaultShaders[index];
 	}
 
@@ -64,7 +57,7 @@ namespace oogl
 	}
 
 
-	void Shader::bind(UniformData uniformValues)
+	void Shader::bind(const uniformData& uniformValues)
 	{
 		glUseProgram(ID);
 		glUniform2f(displacementLocation, uniformValues.diplacement.x, uniformValues.diplacement.y);
