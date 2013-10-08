@@ -1,0 +1,73 @@
+#include "OOGLshader.h"
+#include "shaders.h"
+
+
+namespace oogl
+{
+	std::vector<Shader> Shader::defaultShaders;
+	bool Shader::defaultShadersCreated = false;
+
+
+	Shader::Shader() {}
+
+
+	Shader::Shader(const char* vertexShaderString, const char* fragmentShaderString)
+	{
+		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		glShaderSource(vertexShader, 1, &vertexShaderString, 0);
+		glShaderSource(fragmentShader, 1, &fragmentShaderString, 0);
+
+		glCompileShader(vertexShader);
+		glCompileShader(fragmentShader);
+
+		ID = glCreateProgram();
+		glAttachShader(ID, vertexShader);
+		glAttachShader(ID, fragmentShader);
+		glLinkProgram(ID);
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+
+		displacementLocation = glGetUniformLocation(ID, "displacement");
+		scaleLocation = glGetUniformLocation(ID, "scale");
+		
+		defaultShaders.push_back(*this);
+	}
+
+
+	Shader::Shader(ShaderType index)
+	{
+		if(defaultShadersCreated == false)
+		{
+			defaultShadersCreated = true;
+			setUpShaders();
+		}
+
+		*this = defaultShaders[index];
+	}
+
+
+	void Shader::setUpShaders()
+	{
+		Shader(NormalVertexShader, NormalFragmentShader);
+	}
+
+
+	Shader& Shader::operator=(const Shader& shader)
+	{
+		ID = shader.ID;
+		displacementLocation = shader.displacementLocation;
+		scaleLocation = shader.scaleLocation;
+		return *this;
+	}
+
+
+	void Shader::bind(UniformData uniformValues)
+	{
+		glUseProgram(ID);
+		glUniform2f(displacementLocation, uniformValues.diplacement.x, uniformValues.diplacement.y);
+		glUniform2f(scaleLocation, uniformValues.scale.x, uniformValues.scale.y);
+	}
+}
