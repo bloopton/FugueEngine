@@ -13,28 +13,31 @@ enum direction
 class Character
 {
 public:
-	
+		enum direction;
 	
 
 private:
 
 	oogl::Vec2 pos;
 	bool moving;
+	bool living;
+
+
 
 	int level;
 	int health;
 	int maxHealth;
 	int concentration;
 	int maxConcentration;
-	int attack;
+	int strength;
 	int defense;
 	int speed;
 	int exp;
 	int maxExp;
 
-	attack();
-	track();
-	levelUp();
+	void attack();
+	void track();
+	void levelUp();
 
 
 }
