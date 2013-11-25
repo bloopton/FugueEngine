@@ -18,7 +18,7 @@ public:
 
 private:
 
-	oogl::Vec2 pos;
+	oogl::Vec2<int> pos;
 	bool moving;
 	bool living;
 
@@ -34,6 +34,7 @@ private:
 	int speed;
 	int exp;
 	int maxExp;
+	int luck;
 
 	void attack();
 	void track();

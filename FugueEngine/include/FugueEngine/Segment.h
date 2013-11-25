@@ -3,24 +3,22 @@
 
 #include <OOGL\oogl.hpp>
 
-class Segment
+class Segment : public oogl::Entity
 {
 public:
 		Segment();
-		Segment(oogl::Texture, const char*);
+		Segment(const oogl::Texture&, const char*);
 
 private:
-		static const int size = 128;
-		oogl::Entity mapImg;
+		static const int tiles = 128;
+		static const int scale = 20;
+
 		struct tile
 		{
 			bool solid;
-			oogl::Vec2 position;
+			oogl::Vec2<int> position;
 		};
 
-		tile map[size][size];
-
+		tile map[tiles][tiles];
 };
 #endif
-
-

@@ -3,7 +3,7 @@
 
 namespace oogl
 {
-	float getTime();
+	int getTime();
 }
 
 #endif

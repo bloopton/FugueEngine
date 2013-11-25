@@ -9,8 +9,9 @@ class World
 {
 public:
 	World();
-	World(std::vector<std::vector<Segment>>); 
-	
+	World(std::vector<std::vector<Segment>>, std::vector<Character>, Character); 
+
+	void draw();
 
 private:
 	Character player;
@@ -18,6 +19,4 @@ private:
 	std::vector<Character> NPCS;
 
 };
-
-
 #endif // !WORLD

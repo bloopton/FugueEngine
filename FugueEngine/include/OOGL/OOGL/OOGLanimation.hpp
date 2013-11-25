@@ -11,34 +11,27 @@
 #include "OOGLentity.hpp"
 #include "OOGLtexture.hpp"
 #include "OOGLmodel.hpp"
-#include "OOGLshader.hpp"
 #include <vector>
 
 namespace oogl
 {
-	class Animation
+	class Animation : public Entity
 	{
 	public:
-
-		Entity entity;
-
 		Animation();
 		Animation(const Animation&);
-		Animation(const Model&, const std::vector<Texture>&, shaderType, float);
-		~Animation();
+		Animation(const Model&, const std::vector<Texture>&, int);
 
 		Animation& operator=(const Animation&);
 
 		void run();
 		void play();
 		void pause();
-
 		void reset();
 
-		static void updateAnimations();
+		void draw();
 
 	private:
-
 		enum runState
 		{
 			running,
@@ -46,14 +39,15 @@ namespace oogl
 			paused
 		};
 
-		unsigned int currentImage;
-		runState state;
-		float millisecondsPerFrame;
-		float previousTime;
-		std::vector<Texture> images;
-		static std::vector<Animation*> allAnimations;
+		int previousTime;
+		int millisecPerFrame;
+		int millisecLeft;
+		int currentImage;
 
-		void update(float);
+		runState state;
+		std::vector<Texture> images;
+
+		void update(int);
 	};
 }
 
