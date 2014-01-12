@@ -2,15 +2,22 @@
 #define SEGMENT_H
 
 #include <OOGL\oogl.hpp>
+#include <FugueEngine\Character.h>
 
-class Segment : public oogl::Entity
+class Segment
 {
 public:
 		Segment();
-		Segment(const oogl::Texture&, const char*);
+		Segment(const oogl::Texture&, const oogl::Texture&, const char*);
+		void draw();
 
 private:
-		static const int tiles = 128;
+		oogl::Entity baseImg;
+		oogl::Entity alphaImg;
+
+		std::vector<Character> characters;
+
+		static const int tiles = 64;
 		static const int scale = 20;
 
 		struct tile

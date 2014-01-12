@@ -5,8 +5,9 @@
 Segment::Segment() {}
 
 
-Segment::Segment(const oogl::Texture& tex, const char* fileLocation)
-	: oogl::Entity(oogl::Model(oogl::Vec2<GLfloat>(0,0), scale), tex) 
+Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const char* fileLocation)
+	: baseImg(oogl::Model(oogl::Vec2<GLfloat>(0, 0), scale), baseT), 
+	  alphaImg(oogl::Model(oogl::Vec2<GLfloat>(0, 0), scale), alphaT)
 {
 	std::ifstream collisionFile(fileLocation);
 
@@ -22,4 +23,12 @@ Segment::Segment(const oogl::Texture& tex, const char* fileLocation)
 		}
 
 		collisionFile.close();
+}
+
+
+void Segment::draw()
+{
+	baseImg.draw();
+	//draw characters
+	alphaImg.draw();
 }
