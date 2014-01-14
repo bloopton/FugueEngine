@@ -22,19 +22,22 @@ namespace oogl
 		Entity();
 		Entity(const Entity&);
 		Entity(const Model&, const Texture&);
+		virtual Entity& operator=(const Entity&);
 		~Entity();
 
 		static void setAspectRatio(const Vec2<unsigned int>&);
+		static void setView(const Vec2<GLfloat>&);
 
-		virtual Entity& operator=(const Entity&);
-	
-		virtual void draw();
-		void swapTexture(const Texture&);
 		void setPosition(const Vec2<GLfloat>&);
-		Vec2<GLfloat> getPosition();
 		void translate(const Vec2<GLfloat>&);
+		const Vec2<GLfloat>& getPosition();
+
+		void setScale(const Vec2<GLfloat>&);
 		void scale(const Vec2<GLfloat>&);
-		void rotate(float);
+		const Vec2<GLfloat>& getScale();
+
+		void setTexture(const Texture&);
+		virtual void draw();
 
 
 	private:
@@ -42,11 +45,9 @@ namespace oogl
 		{
 			Vec2<GLfloat> scale;
 			Vec2<GLfloat> diplacement;
-			float rotation;
 		};
 
 
-	private:
 		class Shader
 		{
 		public:
@@ -58,19 +59,24 @@ namespace oogl
 
 			void bind();
 			static void setAspectRatio(const Vec2<unsigned int>&);
+			static void setView(const Vec2<GLfloat>&);
 
 		private:
 			static GLuint ID;
 			static GLuint displacementLocation;
 			static GLuint scaleLocation;
-			static Vec2<unsigned int> aspectRatio;
+			static GLuint aspectLocation;
+			static GLuint viewLocation;
 			static bool shaderGenerated;
+
+			static Vec2<unsigned int> aspectRatio;
+			static Vec2<GLfloat> view;
 
 			static void genShader();
 		};
 
 
-	private:
+
 		GLuint ID, bufferID;
 		Shader shader;
 		Texture texture;

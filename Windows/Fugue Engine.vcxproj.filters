@@ -15,13 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Character.h">
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Character.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Segment.h">
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Segment.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\World.h">
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\World.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\FugueEngine\src\World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

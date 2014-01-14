@@ -1,12 +1,27 @@
-#include<FugueEngine\World.h>
+#include<FugueEngine\World.hpp>
 
-World::World()
+World::World() {}
+
+World::World(std::vector<std::vector<Segment>> segMap)
+	: worldMap(segMap)
 {
-
+	for(int x = 0; x < worldMap.size(); x++)
+		for(int y = 0; y < worldMap[x].size(); y++)
+			worldMap[x][y].setPosition(oogl::Vec2<int>(x, y));
 }
 
-World::World(std::vector<std::vector<Segment>> segMap, std::vector<Character> people , Character character)
-	: worldMap(segMap), NPCS(people)
+
+void World::update(float deltaTime)
 {
-	
+	for(int x = 0; x < worldMap.size(); x++)
+		for(int y = 0; y < worldMap[x].size(); y++)
+			worldMap[x][y].update(deltaTime);
+}
+
+
+void World::draw()
+{
+	for(int x = 0; x < worldMap.size(); x++)
+		for(int y = 0; y < worldMap[x].size(); y++)
+			worldMap[x][y].draw();
 }
