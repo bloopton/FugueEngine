@@ -13,17 +13,15 @@ Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const 
 {
 	std::ifstream collisionFile(fileLocation);
 
-	for(int x = 0; x < tiles; x++)
-		for(int y = 0; y < tiles; y++)
+	
+	for(int y = tiles - 1; y >= 0; y--)
+		for(int x = 0; x < tiles; x++)
 		{
 			if(collisionFile.get() == '0')
 				map[x][y].solid = false;
 			else
 				map[x][y].solid = true;
-
-			map[x][y].position = oogl::Vec2<int>(x, y);
 		}
-
 		collisionFile.close();
 }
 
@@ -38,10 +36,23 @@ void Segment::setPosition(const oogl::Vec2<int>& index)
 }
 
 
+void Segment::addCharacter(Character& character)
+{
+	character.seg = this;
+	characters.push_back(&character);
+}
+
+
+bool Segment::isTileSolid(const oogl::Vec2<int>& pos)
+{
+	return map[pos.x][pos.y].solid;
+}
+
+
 void Segment::update(float deltaTime)
 {
 	for(int i = 0; i < characters.size(); i++)
-		characters[i].update(deltaTime);
+		characters[i]->update(deltaTime);
 }
 
 
@@ -50,7 +61,7 @@ void Segment::draw()
 	baseImg.draw();
 	
 	for(int i = 0; i < characters.size(); i++)
-		characters[i].draw();
+		characters[i]->draw();
 
 	alphaImg.draw();
 }

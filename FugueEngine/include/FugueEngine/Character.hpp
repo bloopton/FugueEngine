@@ -4,6 +4,7 @@
 #include <OOGL/oogl.hpp>
 #include <string>
 
+class Segment;
 
 class Character
 {
@@ -21,6 +22,8 @@ public:
 		STAND = 0,
 		WALK
 	};
+
+	Segment* seg;
 
 	Character();
 	Character(const Character&);

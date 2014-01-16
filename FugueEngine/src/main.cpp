@@ -20,6 +20,8 @@ int main()
 	oogl::Texture baseTex("seg1\\base.png");
 	oogl::Texture alphaTex("seg1\\alpha.png");
 	Segment seg(baseTex, alphaTex, "seg1\\collisions.txt");
+	Player dude("Robot");
+	seg.addCharacter(dude);
 
 	oogl::Texture baseTex2("seg2\\base.png");
 	oogl::Texture alphaTex2("seg2\\alpha.png");
@@ -40,8 +42,6 @@ int main()
 	sf::Clock clock;
 	float time = clock.getElapsedTime().asMilliseconds();
 
-	Player dude("Robot");
-
 	bool running = true;
 	while(running)
 	{
@@ -53,10 +53,8 @@ int main()
 
 		world.update(deltaTime);
 		world.draw();
-		dude.update(deltaTime);
-		dude.draw();
-		
 
+		
 		gameWindow.display();
 		glClear(GL_COLOR_BUFFER_BIT);
 	}

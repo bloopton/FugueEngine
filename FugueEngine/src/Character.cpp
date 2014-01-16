@@ -12,12 +12,12 @@ Character::Character(const Character& character)
 {}
 
 Character::Character(std::string fileLocation)
-	: currentSeg(0, 0), currentTile(0, 0), tilePos(0, 0), 
+	: currentSeg(0, 0), currentTile(0, 0), tilePos(Segment::tileSize/2.0f, 0), 
 	position(Segment::tileSize/2.0f, Segment::tileSize/2.0f),
 	animations(2, std::vector<oogl::Animation>()), action(STAND), direction(FRONT)
 {
 	oogl::Model model(oogl::Vec2<GLfloat>(0,0), (float)Segment::scale/(float)Segment::tiles);
-	int fr = 500;
+	int fr = 600;
 
 	std::string currentFolder;
 
@@ -60,69 +60,81 @@ void Character::move(float deltaTime)
 {
 	float distance = speed * deltaTime;
 
+	oogl::Vec2<int> testCurrentSeg = currentSeg, testCurrentTile = currentTile;
+	oogl::Vec2<GLfloat> testTilePos = tilePos, testPosition = position;
+
 	if(direction == FRONT) 
 	{
-		tilePos.y -= distance;
-		position.y -= distance;
+		testTilePos.y -= distance;
+		testPosition.y -= distance;
 	}
 	else if(direction == BACK) 
 	{
-		tilePos.y += distance;
-		position.y += distance;
+		testTilePos.y += distance;
+		testPosition.y += distance;
 	}
 	else if(direction == RIGHT) 
 	{
-		tilePos.x += distance;
-		position.x += distance;
+		testTilePos.x += distance;
+		testPosition.x += distance;
 	}
 	else if(direction == LEFT) 
 	{
-		tilePos.x -= distance;
-		position.x -= distance;
+		testTilePos.x -= distance;
+		testPosition.x -= distance;
 	}
 
 
-	if(tilePos.y > Segment::tileSize)
+	if(testTilePos.y > Segment::tileSize)
 	{
-		tilePos.y -= Segment::tileSize;
-		currentTile.y++;
+		testTilePos.y -= Segment::tileSize;
+		testCurrentTile.y++;
 	}
-	if(tilePos.y < 0)
+	if(testTilePos.y < 0)
 	{
-		tilePos.y += Segment::tileSize;
-		currentTile.y--;
+		testTilePos.y += Segment::tileSize;
+		testCurrentTile.y--;
 	}
-	if(tilePos.x > Segment::tileSize)
+	if(testTilePos.x > Segment::tileSize)
 	{
-		tilePos.x -= Segment::tileSize;
-		currentTile.x++;
+		testTilePos.x -= Segment::tileSize;
+		testCurrentTile.x++;
 	}
-	if(tilePos.x < 0)
+	if(testTilePos.x < 0)
 	{
-		tilePos.x += Segment::tileSize;
-		currentTile.x--;
+		testTilePos.x += Segment::tileSize;
+		testCurrentTile.x--;
 	}
 
 
-	if(currentTile.y > Segment::tiles)
+	if(testCurrentTile.y > Segment::tiles)
 	{
-		currentTile.y -= Segment::tiles;
-		currentSeg.y++;
+		testCurrentTile.y -= Segment::tiles;
+		testCurrentSeg.y++;
 	}
-	if(currentTile.y < 0)
+	if(testCurrentTile.y < 0)
 	{
-		currentTile.y += Segment::tiles;
-		currentSeg.y--;
+		testCurrentTile.y += Segment::tiles;
+		testCurrentSeg.y--;
 	}
-	if(currentTile.x > Segment::tiles)
+	if(testCurrentTile.x > Segment::tiles)
 	{
-		currentTile.x -= Segment::tiles;
-		currentSeg.x++;
+		testCurrentTile.x -= Segment::tiles;
+		testCurrentSeg.x++;
 	}
-	if(currentTile.x < 0)
+	if(testCurrentTile.x < 0)
 	{
-		currentTile.x += Segment::tiles;
-		currentSeg.x--;
+		testCurrentTile.x += Segment::tiles;
+		testCurrentSeg.x--;
+	}	
+
+
+	if(seg->isTileSolid(testCurrentTile) == false)
+	{
+		position = testPosition;
+		tilePos = testTilePos;
+		currentTile = testCurrentTile;
+		currentSeg = testCurrentSeg;
 	}
 }
 

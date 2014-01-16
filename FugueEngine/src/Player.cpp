@@ -10,13 +10,13 @@ Player::Player() {}
 Player::Player(const Player& player)
 	: Character(player)
 {
-	speed = .0005;
+	speed = .0004;
 }
 
 Player::Player(const char* file)
 	: Character(file)
 {
-	speed = .0005;
+	speed = .0004;
 }
 
 
