@@ -11,23 +11,25 @@
 int main()
 {
 	sf::VideoMode video = sf::VideoMode::getDesktopMode();
-	sf::Window gameWindow(video, "SFML OpenGL", sf::Style::Fullscreen);
+	sf::Window gameWindow(video, "SFML OpenGL");
 	oogl::ooglInit();
 	oogl::Entity::setAspectRatio(oogl::Vec2<unsigned int>(video.width, video.height));
 
-	std::vector<std::vector<Segment>> map;
 
 	oogl::Texture baseTex("seg1\\base.png");
 	oogl::Texture alphaTex("seg1\\alpha.png");
 	Segment seg(baseTex, alphaTex, "seg1\\collisions.txt");
+
 	Player dude("Robot");
 	seg.addCharacter(dude);
+
 
 	oogl::Texture baseTex2("seg2\\base.png");
 	oogl::Texture alphaTex2("seg2\\alpha.png");
 	Segment seg2(baseTex2, alphaTex2, "seg2\\collisions.txt");
 
 
+	std::vector<std::vector<Segment>> map;
 	std::vector<Segment> segs1;
 	segs1.push_back(seg);
 

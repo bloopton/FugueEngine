@@ -29,20 +29,32 @@ public:
 	Character(const Character&);
 	Character(std::string);
 
-	virtual void update(GLfloat);
+	virtual void update(GLfloat) = 0;
 	void draw();
 
 protected:
+	std::string name;
+	int maxHealth;
+	int health;
+	int attack;
+	int defense;
 	float speed;
 
 	Direction direction;
 	Action action;
 
-	oogl::Vec2<int> currentSeg, currentTile;
-	oogl::Vec2<GLfloat> tilePos, position;
+	oogl::Vec2<int> 
+		currentSeg,
+		leftTile,
+		rightTile;
+
+	oogl::Vec2<GLfloat> 
+		tilePosLeft, 
+		tilePosRight, 
+		position;
 
 	std::vector<std::vector<oogl::Animation>> animations;
 		
-	void move(float);
+	virtual void move(float);
 };
 #endif // !CHARACTER_H
