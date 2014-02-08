@@ -14,9 +14,5 @@ public:
 	Player(std::string);
 
 	void update(float);
-
-protected:
-
-	sf::Sound walkSound;
 };
 #endif

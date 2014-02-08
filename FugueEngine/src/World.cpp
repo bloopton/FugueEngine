@@ -7,7 +7,7 @@ World::World(std::vector<std::vector<Segment>> segMap)
 {
 	for(int x = 0; x < worldMap.size(); x++)
 		for(int y = 0; y < worldMap[x].size(); y++)
-			worldMap[x][y].setPosition(oogl::Vec2<int>(x, y));
+			worldMap[x][y].setPosition(oogl::Vec2i(x, y));
 }
 
 

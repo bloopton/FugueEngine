@@ -13,11 +13,11 @@ Character::Character(const Character& character)
 {}
 
 Character::Character(std::string fileLocation)
-	: currentSeg(0, 0), leftTile(0, 0), rightTile(0, 0), tilePosRight(0, 0), 
-	tilePosLeft(Segment::tileSize, 0), position(Segment::tileSize/2.0f, Segment::tileSize/2.0f),
+	: currentSeg(0, 0), leftTile(0, 0), rightTile(3, 0), tilePosLeft(Segment::tileSize/2.0f, 0), 
+	tilePosRight(Segment::tileSize/2.0f, 0), position(Segment::tileSize * 2, Segment::tileSize * 2),
 	animations(2, std::vector<oogl::Animation>()), action(STAND), direction(FRONT)
 {
-	oogl::Model model(oogl::Vec2<GLfloat>(0,0), (float)Segment::scale/(float)Segment::tiles);
+	oogl::Model model(oogl::Vec2f(0,0), Segment::tileSize * 4);
 	int fr = 600;
 
 	std::string currentFolder;
@@ -54,11 +54,11 @@ void Character::move(float deltaTime)
 {
 	float distance = speed * deltaTime;
 
-	oogl::Vec2<int> 
+	oogl::Vec2i 
 		testRightTile = rightTile, 
 		testLeftTile = leftTile;
 
-	oogl::Vec2<GLfloat> 
+	oogl::Vec2f
 		testTilePosRight = tilePosRight, 
 		testTilePosLeft = tilePosLeft, 
 		testPosition = position;

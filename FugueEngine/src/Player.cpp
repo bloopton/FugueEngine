@@ -4,7 +4,6 @@
 #include <OOGL\oogl.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Window.hpp>
-#include <SFML\Audio.hpp>
  
 
 Player::Player() {}
@@ -19,12 +18,6 @@ Player::Player(std::string file)
 	: Character(file)
 {
 	speed = .0004;
-
-	sf::SoundBuffer buffer;
-	if (buffer.loadFromFile(file + "\\animations\\walk\\sound.wav") == false)
-		std::cout<<"Error Loading Sound!!!!!!";
-
-	walkSound.setBuffer(buffer);
 }
 
 
@@ -55,11 +48,10 @@ void Player::update(float deltaTime)
 		action = STAND;
 	}
 
-	oogl::Entity::setView(position * -1.0f);
+	oogl::setView(position * -1.0f);
 	
 	if(action == WALK)
 	{
 		move(deltaTime);
-		walkSound.play();
 	}
 }

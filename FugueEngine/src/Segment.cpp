@@ -7,8 +7,8 @@ const float Segment::tileSize = (float)scale/(float)tiles;
 Segment::Segment() {}
 
 Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const char* fileLocation)
-	: baseImg(oogl::Model(oogl::Vec2<GLfloat>(0, 0), scale), baseT), 
-	  alphaImg(oogl::Model(oogl::Vec2<GLfloat>(0, 0), scale), alphaT),
+	: baseImg(oogl::Model(oogl::Vec2f(0, 0), scale), baseT), 
+	  alphaImg(oogl::Model(oogl::Vec2f(0, 0), scale), alphaT),
 	  characters()
 {
 	std::ifstream collisionFile(fileLocation);
@@ -26,9 +26,9 @@ Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const 
 }
 
 
-void Segment::setPosition(const oogl::Vec2<int>& index)
+void Segment::setPosition(const oogl::Vec2i& index)
 {
-	oogl::Vec2<GLfloat> pos(scale * index.x, scale * index.y);
+	oogl::Vec2f pos(scale * index.x, scale * index.y);
 	pos += (float)scale / 2.0f;
 
 	baseImg.setPosition(pos);
@@ -43,7 +43,7 @@ void Segment::addCharacter(Character& character)
 }
 
 
-bool Segment::isTileSolid(const oogl::Vec2<int>& pos)
+bool Segment::isTileSolid(const oogl::Vec2i& pos)
 {
 	return map[pos.x][pos.y].solid;
 }

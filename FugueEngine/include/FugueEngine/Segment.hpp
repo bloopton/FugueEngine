@@ -11,13 +11,13 @@ public:
 
 	Segment();
 	Segment(const oogl::Texture&, const oogl::Texture&, const char*);
-	void setPosition(const oogl::Vec2<int>&);
+	void setPosition(const oogl::Vec2i&);
 	void addCharacter(Character&);
-	bool isTileSolid(const oogl::Vec2<int>&);
+	bool isTileSolid(const oogl::Vec2i&);
 	void update(float);
 	void draw();
 
-	static const int tiles = 64;
+	static const int tiles = 256;
 	static const int scale = 12;
 	static const float tileSize;
 

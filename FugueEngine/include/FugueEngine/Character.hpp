@@ -43,12 +43,12 @@ protected:
 	Direction direction;
 	Action action;
 
-	oogl::Vec2<int> 
+	oogl::Vec2i 
 		currentSeg,
 		leftTile,
 		rightTile;
 
-	oogl::Vec2<GLfloat> 
+	oogl::Vec2f 
 		tilePosLeft, 
 		tilePosRight, 
 		position;
