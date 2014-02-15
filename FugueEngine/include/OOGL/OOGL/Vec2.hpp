@@ -1,10 +1,3 @@
-//////////////////////////////////////
-//             Vec2                 //
-//////////////////////////////////////
-/*
-
-*/
-
 #ifndef OOGLVEC2_HPP
 #define OOGLVEC2_HPP
 
@@ -12,24 +5,18 @@
 #include <math.h>
 
 
-namespace oogl
+namespace gl
 {
-	////////////////////////////////////////////////////////////
-	/// \brief Utility template class for manipulating
-	///        2-dimensional vectors
-	///
-	////////////////////////////////////////////////////////////
 	template<class value>
 	class Vec2
 	{	
 	public:
 		value x,y;
 
-
 		Vec2()						: x(0), y(0) {}
 		Vec2(const Vec2& vec2)		: x(vec2.x), y(vec2.y) {}
-		Vec2(value inX, value inY)  : x(inX), y(inY) {}
-
+		Vec2(value Z)				: x(Z), y(Z) {}
+		Vec2(value X, value Y)      : x(X), y(Y) {}
 
 		Vec2& operator=(const Vec2& vec2)
 		{
@@ -48,16 +35,16 @@ namespace oogl
 			return sqrt(sum);
 		}
 
-
+		
 		//Adition
 		Vec2 operator+(const Vec2& vec2)	{ return Vec2(x + vec2.x, y + vec2.y); }
 		Vec2& operator+=(const Vec2& vec2)	{ *this = *this + vec2; return *this;  }
-		Vec2& operator+=(value z)			{ *this = *this + z; return *this;     }
+		Vec2& operator+=(value z)			{ *this = Vec2(x + z, y + z); return *this;}
 
 		//Multiplication
 		Vec2 operator*(const Vec2& vec2)	{ return Vec2(x * vec2.x, y * vec2.y); }
 		Vec2& operator*=(const Vec2& vec2)	{ *this = *this * vec2; return *this;  }
-		Vec2& operator*=(value z)			{ *this = *this * z; return *this;     }
+		Vec2& operator*=(value z)			{ *this = Vec2(x * z, y * z); return *this;}
 
 		//Subtraction
 		Vec2 operator-(const Vec2& vec2)	{ return Vec2(x - vec2.x, y - vec2.y); }

@@ -1,10 +1,3 @@
-//////////////////////////////////////
-//           Animation              //
-//////////////////////////////////////
-/*
-
-*/
-
 #ifndef OOGLANIMATION_HPP
 #define OOGLANIMATION_HPP
 
@@ -12,19 +5,18 @@
 #include <string>
 #include <vector>
 
-namespace oogl
+namespace gl
 {
 	class Texture;
-	class Model;
+	class VertexArray;
 
 	class Animation : public Entity
 	{
 	public:
-
 		Animation();
 		Animation(const Animation&);
-		Animation(const Model&, const std::vector<Texture>&, int);
-		Animation(const Model&, std::string, int, int);
+		Animation(const VertexArray&, const std::vector<Texture>&, int);
+		Animation(const Rectangle&, const std::vector<Texture>&, int);
 
 		Animation& operator=(const Animation&);
 
@@ -36,6 +28,7 @@ namespace oogl
 
 		void draw();
 
+
 	private:
 		enum runState
 		{
@@ -43,7 +36,7 @@ namespace oogl
 			playing,
 			paused
 		};
-
+		
 		int previousTime;
 		int millisecPerFrame;
 		int millisecLeft;

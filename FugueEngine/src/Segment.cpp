@@ -4,16 +4,27 @@
 
 const float Segment::tileSize = (float)scale/(float)tiles;
 
+
 Segment::Segment() {}
 
-Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const char* fileLocation)
-	: baseImg(oogl::Model(oogl::Vec2f(0, 0), scale), baseT), 
-	  alphaImg(oogl::Model(oogl::Vec2f(0, 0), scale), alphaT),
-	  characters()
+
+namespace
+{
+	gl::Vec2f gridPosition(const gl::Vec2u& gridIndex)
+	{
+		gl::Vec2f pos = gl::Vec2f(Segment::scale * gridIndex.x, Segment::scale * gridIndex.y);
+		pos += float(Segment::scale) / 2.0f;
+		return pos;
+	}
+}
+
+Segment::Segment(const gl::Texture& baseT, const gl::Texture& alphaT, const std::string& fileLocation, const gl::Vec2u& inGridIndex)
+	: baseImg(gl::Rectangle(gridPosition(inGridIndex), scale), baseT), 
+	  alphaImg(gl::Rectangle(gridPosition(inGridIndex), scale), alphaT),
+	  gridIndex(inGridIndex)
 {
 	std::ifstream collisionFile(fileLocation);
 
-	
 	for(int y = tiles - 1; y >= 0; y--)
 		for(int x = 0; x < tiles; x++)
 		{
@@ -22,37 +33,26 @@ Segment::Segment(const oogl::Texture& baseT, const oogl::Texture& alphaT, const 
 			else
 				map[x][y].solid = true;
 		}
-		collisionFile.close();
+
+	collisionFile.close();
 }
 
 
-void Segment::setPosition(const oogl::Vec2i& index)
+const gl::Vec2u& Segment::getGridIndex()
 {
-	oogl::Vec2f pos(scale * index.x, scale * index.y);
-	pos += (float)scale / 2.0f;
-
-	baseImg.setPosition(pos);
-	alphaImg.setPosition(pos);
-}
-
-
-void Segment::addCharacter(Character& character)
-{
-	character.seg = this;
-	characters.push_back(&character);
-}
-
-
-bool Segment::isTileSolid(const oogl::Vec2i& pos)
-{
-	return map[pos.x][pos.y].solid;
+	return gridIndex;
 }
 
 
 void Segment::update(float deltaTime)
 {
 	for(int i = 0; i < characters.size(); i++)
+	{
+		if(characters[i] == NULL)
+			characters.erase(characters.begin() + i);
+
 		characters[i]->update(deltaTime);
+	}
 }
 
 

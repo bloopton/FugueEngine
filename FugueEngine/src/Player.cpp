@@ -23,35 +23,5 @@ Player::Player(std::string file)
 
 void Player::update(float deltaTime)
 {
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		direction = BACK;
-		action = WALK;
-	}		
-	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		direction = FRONT;
-		action = WALK;
-	}	
-	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		direction = RIGHT;
-		action = WALK;
-	}
-	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		direction = LEFT;
-		action = WALK;
-	}
-	else
-	{
-		action = STAND;
-	}
 
-	oogl::setView(position * -1.0f);
-	
-	if(action == WALK)
-	{
-		move(deltaTime);
-	}
 }

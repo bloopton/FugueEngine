@@ -12,24 +12,11 @@ int main()
 {
 	sf::VideoMode video = sf::VideoMode::getDesktopMode();
 	sf::Window gameWindow(video, "SFML OpenGL");
-	oogl::ooglInit();
-	oogl::setAspectRatio(oogl::Vec2u(video.width, video.height));
+
+	gl::ooglInit();
+	gl::setAspectRatio(gl::Vec2u(video.width, video.height));
 
 
-	oogl::Texture baseTex("seg1\\base.png");
-	oogl::Texture alphaTex("seg1\\alpha.png");
-	Segment seg(baseTex, alphaTex, "seg1\\collisions.txt");
-
-	Player dude("Robot");
-	seg.addCharacter(dude);
-
-	std::vector<std::vector<Segment>> map;
-	std::vector<Segment> segs1;
-	segs1.push_back(seg);
-
-	map.push_back(segs1);
-
-	World world(map);
 
 	sf::Clock clock;
 	float time = clock.getElapsedTime().asMilliseconds();
@@ -37,19 +24,22 @@ int main()
 	bool running = true;
 	while(running)
 	{
-		float deltaTime = clock.getElapsedTime().asMilliseconds() - time;
-		time = clock.getElapsedTime().asMilliseconds();
-
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			running = false;
 
-		world.update(deltaTime);
-		world.draw();
+
+		float deltaTime = clock.getElapsedTime().asMilliseconds() - time;
+		time = clock.getElapsedTime().asMilliseconds();
+
+
 
 		
 		gameWindow.display();
-		glClear(GL_COLOR_BUFFER_BIT);
+		gl::clear();
 	}
+
+
+	gl::ooglTerminate();
 
 	return 0;
 }
