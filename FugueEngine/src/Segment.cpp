@@ -4,10 +4,6 @@
 
 const float Segment::tileSize = (float)scale/(float)tiles;
 
-
-Segment::Segment() {}
-
-
 namespace
 {
 	gl::Vec2f gridPosition(const gl::Vec2u& gridIndex)
@@ -17,6 +13,8 @@ namespace
 		return pos;
 	}
 }
+
+Segment::Segment() {}
 
 Segment::Segment(const gl::Texture& baseT, const gl::Texture& alphaT, const std::string& fileLocation, const gl::Vec2u& inGridIndex)
 	: baseImg(gl::Rectangle(gridPosition(inGridIndex), scale), baseT), 

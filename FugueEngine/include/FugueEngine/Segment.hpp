@@ -17,8 +17,8 @@ public:
 	Segment();
 	Segment(const gl::Texture&, const gl::Texture&, const std::string&, const gl::Vec2u&);
 
-	const gl::Vec2u& getGridIndex();
 
+	const gl::Vec2u& getGridIndex() const;
 
 	void update(float);
 	void draw();
