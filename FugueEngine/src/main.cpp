@@ -12,7 +12,6 @@ int main()
 {
 	sf::VideoMode video = sf::VideoMode::getDesktopMode();
 	sf::Window gameWindow(video, "SFML OpenGL");
-
 	gl::ooglInit();
 	gl::setAspectRatio(gl::Vec2u(video.width, video.height));
 

@@ -36,7 +36,7 @@ Segment::Segment(const gl::Texture& baseT, const gl::Texture& alphaT, const std:
 }
 
 
-const gl::Vec2u& Segment::getGridIndex()
+const gl::Vec2u& Segment::getGridIndex() const
 {
 	return gridIndex;
 }
