@@ -1,28 +1,31 @@
 #include<FugueEngine\World.hpp>
 
+
 World::World() {}
 
-World::World(std::vector<std::unique_ptr<Segment>> segments)
+World::World(const std::string& saveFile)
 {
-	for(int i = 0; i < segments.size(); i++)
-	{
-		gl::Vec2u index = segments[i]->getGridIndex();
-		worldMap[index.x][index.y] = std::move(segments[i]);
-	}
+	worldMap.resize(size);
+	for(auto& i : worldMap)
+		i.resize(size);
+
+	worldMap[0][0].reset(new Segment(saveFile, "resources/segments/0 0"));
 }
 
 
 void World::update(float deltaTime)
 {
-	for(int x = 0; x < size; x++)
-		for(int y = 0; y < size; y++)
-			worldMap[x][y]->update(deltaTime);
+	for(std::vector<segPtr>& v : worldMap)
+		for(segPtr& p : v)
+			if(p != NULL)
+				p->update(deltaTime);
 }
 
 
 void World::draw()
 {
-	for(int x = 0; x < size; x++)
-		for(int y = 0; y < size; y++)
-			worldMap[x][y]->draw();
+	for(std::vector<segPtr>& v : worldMap)
+		for(segPtr& p : v)
+			if(p != NULL)
+				p->draw();
 }

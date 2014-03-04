@@ -12,12 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Character.hpp" />
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\FugueCore.hpp" />
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp" />
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Segment.hpp" />
     <ClInclude Include="..\FugueEngine\include\FugueEngine\World.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FugueEngine\src\Character.cpp" />
+    <ClCompile Include="..\FugueEngine\src\FugueCore.cpp" />
     <ClCompile Include="..\FugueEngine\src\main.cpp" />
     <ClCompile Include="..\FugueEngine\src\Player.cpp" />
     <ClCompile Include="..\FugueEngine\src\Segment.cpp" />

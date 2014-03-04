@@ -2,56 +2,42 @@
 #define CHARACTER_H
 
 #include <OOGL/oogl.hpp>
+#include <memory>
 #include <string>
-
-
-enum Direction 
-{
-	FRONT = 0,
-	BACK,
-	RIGHT,
-	LEFT	
-};
-
 
 
 class Character
 {
 public:
-	Character();
-	Character(const Character&);
-	Character(std::string);
+	enum Direction 
+	{
+		FRONT = 0,
+		BACK,
+		RIGHT,
+		LEFT	
+	};
 
-	Character& operator=(const Character&);
+	static std::unique_ptr<Character> load(const std::string&);
 
 	virtual void update(GLfloat) = 0;
 	virtual void draw() = 0;
 
-	static void loadTextures();
-
 protected:
-	static std::vector<std::vector< gl::Texture>> textures;
 	std::vector<std::vector<gl::Animation>> animations;
+	gl::Animation* currentAnimation;
+	void (*currentAction)(float);
 
-
-	void (*behavior)(float);
-	Direction direction;
 	std::string name;
+	gl::Vec2f position;
+	Direction direction;
 
-	int maxHealth,
-		health,
-		attack,
-		defense;
+	int maxHealth, health, attack, defense;
 
 	float speed;
 
-
-	virtual void defaultBehavior(float) = 0;
-	virtual void flee(float) = 0;
-	virtual void fight(float) = 0;
-
-
 	virtual void move(float) = 0;
-
 };
+
+typedef std::unique_ptr<Character> chrPtr;
+
 #endif // !CHARACTER_H

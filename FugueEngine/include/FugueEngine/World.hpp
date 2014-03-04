@@ -12,12 +12,12 @@ public:
 	static const int size = 50;
 
 	World();
-	World(std::vector<std::unique_ptr<Segment>>); 
+	World(const std::string&);  
 
 	void update(float);
 	void draw();
 
 private:
-	std::unique_ptr<Segment> worldMap[size][size];
+	std::vector<std::vector<segPtr>> worldMap;
 };
 #endif // !WORLD

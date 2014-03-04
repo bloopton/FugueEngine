@@ -1,13 +1,18 @@
 #include <FugueEngine\Segment.hpp>
-#include <iostream>
+#include <sstream>
 #include <fstream>
 
 const float Segment::tileSize = (float)scale/(float)tiles;
 
 namespace
 {
-	gl::Vec2f gridPosition(const gl::Vec2u& gridIndex)
+	gl::Vec2f gridPosition(const std::string& folderName)
 	{
+		std::stringstream ss(folderName);
+		gl::Vec2f gridIndex;
+		ss >> gridIndex.x;
+		ss >> gridIndex.y;
+
 		gl::Vec2f pos = gl::Vec2f(Segment::scale * gridIndex.x, Segment::scale * gridIndex.y);
 		pos += float(Segment::scale) / 2.0f;
 		return pos;
@@ -16,50 +21,50 @@ namespace
 
 Segment::Segment() {}
 
-Segment::Segment(const gl::Texture& baseT, const gl::Texture& alphaT, const std::string& fileLocation, const gl::Vec2u& inGridIndex)
-	: baseImg(gl::Rectangle(gridPosition(inGridIndex), scale), baseT), 
-	  alphaImg(gl::Rectangle(gridPosition(inGridIndex), scale), alphaT),
-	  gridIndex(inGridIndex)
+Segment::Segment(const std::string& save, const std::string& folder)
+	: baseImg(gl::Rectangle(gridPosition(folder), scale), gl::Texture(folder + "/base.png")),
+	  topImg(gl::Rectangle(gridPosition(folder), scale), gl::Texture(folder + "/top.png")),
+	  characters(0)
 {
-	std::ifstream collisionFile(fileLocation);
-
+	std::ifstream fileStream(folder + "/collisions.txt");
 	for(int y = tiles - 1; y >= 0; y--)
 		for(int x = 0; x < tiles; x++)
 		{
-			if(collisionFile.get() == '0')
+			if(fileStream.get() == '0')
 				map[x][y].solid = false;
 			else
 				map[x][y].solid = true;
 		}
+	fileStream.close();
 
-	collisionFile.close();
+
+	std::vector<std::string> chrSaves;
+	fileStream.open(save);
+	while(fileStream.eof() == false)
+	{
+		std::string line;
+		std::getline(fileStream, line);
+		chrSaves.push_back(line);
+	}
+
+	for(std::string s : chrSaves)
+		characters.push_back(Character::load(s));
 }
 
 
-const gl::Vec2u& Segment::getGridIndex() const
-{
-	return gridIndex;
-}
 
 
 void Segment::update(float deltaTime)
 {
-	for(int i = 0; i < characters.size(); i++)
-	{
-		if(characters[i] == NULL)
-			characters.erase(characters.begin() + i);
-
-		characters[i]->update(deltaTime);
-	}
+	for(chrPtr& c : characters)
+		c->update(deltaTime);
 }
-
-
 void Segment::draw()
 {
 	baseImg.draw();
 	
-	for(int i = 0; i < characters.size(); i++)
-		characters[i]->draw();
+	for(chrPtr& c : characters)
+		c->draw();
 
-	alphaImg.draw();
+	topImg.draw();
 }

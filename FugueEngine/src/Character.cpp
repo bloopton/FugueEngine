@@ -1,15 +1,17 @@
 #include <FugueEngine\Character.hpp>
+#include <FugueEngine\Player.hpp>
 #include <FugueEngine\Segment.hpp>
 
 
-Character::Character() {}
+chrPtr Character::load(const std::string& file)
+{
+	chrPtr loadedChr;
+	std::string type(file.end() - 4, file.end());
 
-Character::Character(const Character& character) {}
+	if(type.compare(".plr") == 0)
+	{
+		loadedChr.reset(new Player("saves/" + file));
+	}
 
-Character::Character(std::string fileLocation) {}
-
-
-
-void Character::move(float deltaTime) {}
-
-void Character::draw() {}
+	return loadedChr;
+}

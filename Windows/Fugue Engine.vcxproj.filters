@@ -27,6 +27,9 @@
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\FugueCore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FugueEngine\src\Character.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\FugueEngine\src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\FugueCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
