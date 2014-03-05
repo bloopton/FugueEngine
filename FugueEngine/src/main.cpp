@@ -1,6 +1,5 @@
 #include <FugueEngine\FugueCore.hpp>
 
-
 int main()
 {
 	sf::Window gameWindow;
@@ -13,6 +12,7 @@ int main()
 	sf::Clock clock;
 	float time = clock.getElapsedTime().asMilliseconds();
 	
+
 	bool running = true;
 	while(running)
 	{
@@ -29,8 +29,8 @@ int main()
 		gl::clear();
 	}
 
+
 	releseReferences();
 	gl::ooglTerminate();
-
 	return 0;
 }
