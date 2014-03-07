@@ -20,7 +20,5 @@ public:
 
 protected:
 	static std::vector<std::vector< gl::Animation>> refrences;
-
-	void move(float);
 };
 #endif

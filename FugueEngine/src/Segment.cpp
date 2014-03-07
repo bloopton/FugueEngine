@@ -24,7 +24,7 @@ Segment::Segment() {}
 Segment::Segment(const std::string& save, const std::string& folder)
 	: baseImg(gl::Rectangle(gridPosition(folder), scale), gl::Texture(folder + "/base.png")),
 	  topImg(gl::Rectangle(gridPosition(folder), scale), gl::Texture(folder + "/top.png")),
-	  characters(0)
+	  characters(0), saveFile(save)
 {
 	std::ifstream fileStream(folder + "/collisions.txt");
 	for(int y = tiles - 1; y >= 0; y--)
@@ -52,6 +52,13 @@ Segment::Segment(const std::string& save, const std::string& folder)
 }
 
 
+void Segment::save()
+{
+	std::vector<std::string> chrSaves;
+
+	for(auto& p : characters)
+		chrSaves
+}
 
 
 void Segment::update(float deltaTime)

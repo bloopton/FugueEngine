@@ -27,6 +27,7 @@ public:
 	void save();
 
 private:
+	const std::string saveFile;
 	gl::Entity baseImg, topImg;
 	tile map[tiles][tiles];
 	std::vector<chrPtr> characters;

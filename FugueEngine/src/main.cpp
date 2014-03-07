@@ -6,7 +6,7 @@ int main()
 	genWindow(&gameWindow);
 	loadReferences();
 
-	World world("saves/save.sav");
+	World world("saves/");
 
 
 	sf::Clock clock;

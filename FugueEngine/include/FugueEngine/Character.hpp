@@ -9,10 +9,10 @@
 class Character
 {
 public:
-	enum Direction 
+	enum Direction
 	{
-		FRONT = 0,
-		BACK,
+		UP = 0,
+		DOWN,
 		RIGHT,
 		LEFT	
 	};
@@ -35,7 +35,8 @@ protected:
 
 	float speed;
 
-	virtual void move(float) = 0;
+	virtual void move(float);
+	static gl::Vec2f getDirectionVec(Direction);
 };
 
 typedef std::unique_ptr<Character> chrPtr;

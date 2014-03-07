@@ -14,6 +14,7 @@ public:
 	World();
 	World(const std::string&);  
 
+	void save(const std::string&);
 	void update(float);
 	void draw();
 

@@ -9,7 +9,13 @@ World::World(const std::string& saveFile)
 	for(auto& i : worldMap)
 		i.resize(size);
 
-	worldMap[0][0].reset(new Segment(saveFile, "resources/segments/0 0"));
+	worldMap[0][0].reset(new Segment(saveFile + "0 0.seg", "resources/segments/0 0"));
+}
+
+
+void World::save(const std::string& saveFile)
+{
+
 }
 
 
