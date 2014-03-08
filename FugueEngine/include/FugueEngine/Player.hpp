@@ -12,6 +12,7 @@ public:
 	Player();
 	Player(const std::string&);
 
+	std::string save(const std::string&);
 	void update(GLfloat);
 	void draw();
 
@@ -20,5 +21,8 @@ public:
 
 protected:
 	static std::vector<std::vector< gl::Animation>> refrences;
+	static gl::Rectangle bounds, wcBoundsY, wcBoundsX;
+
+	bool isColision();
 };
 #endif

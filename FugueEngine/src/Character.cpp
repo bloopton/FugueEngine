@@ -1,7 +1,9 @@
 #include <FugueEngine\Character.hpp>
 #include <FugueEngine\Player.hpp>
+#include <FugueEngine\World.hpp>
 #include <FugueEngine\Segment.hpp>
 
+World* Character::worldRef = NULL;
 
 chrPtr Character::load(const std::string& file)
 {
@@ -9,9 +11,7 @@ chrPtr Character::load(const std::string& file)
 	std::string type(file.end() - 4, file.end());
 
 	if(type.compare(".plr") == 0)
-	{
-		loadedChr.reset(new Player("saves/" + file));
-	}
+		loadedChr.reset(new Player(file));
 
 	return loadedChr;
 }
@@ -21,16 +21,16 @@ gl::Vec2f Character::getDirectionVec(Direction dir)
 {
 	switch (dir)
 	{
-	case Character::UP:
+	case UP:
 		return gl::Vec2f(0,1);
 		break;
-	case Character::DOWN:
+	case DOWN:
 		return gl::Vec2f(0, -1);
 		break;
-	case Character::RIGHT:
+	case RIGHT:
 		return gl::Vec2f(1, 0);
 		break;
-	case Character::LEFT:
+	case LEFT:
 		return gl::Vec2f(-1, 0);
 		break;
 	}
@@ -40,4 +40,7 @@ gl::Vec2f Character::getDirectionVec(Direction dir)
 void Character::move(float deltaTime)
 {
 	position += speed * deltaTime * getDirectionVec(direction);
+
+	if(isColision())
+		position -= speed * deltaTime * getDirectionVec(direction);
 }

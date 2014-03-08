@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+class World;
 
 class Character
 {
@@ -17,7 +18,9 @@ public:
 		LEFT	
 	};
 
+	static World* worldRef;
 	static std::unique_ptr<Character> load(const std::string&);
+	virtual std::string save(const std::string&) = 0;
 
 	virtual void update(GLfloat) = 0;
 	virtual void draw() = 0;
@@ -36,6 +39,8 @@ protected:
 	float speed;
 
 	virtual void move(float);
+	virtual bool isColision() = 0;
+
 	static gl::Vec2f getDirectionVec(Direction);
 };
 

@@ -37,15 +37,15 @@ Segment::Segment(const std::string& save, const std::string& folder)
 		}
 	fileStream.close();
 
-
-	std::vector<std::string> chrSaves;
 	fileStream.open(save);
+	std::vector<std::string> chrSaves;
 	while(fileStream.eof() == false)
 	{
 		std::string line;
 		std::getline(fileStream, line);
 		chrSaves.push_back(line);
 	}
+	fileStream.close();
 
 	for(std::string s : chrSaves)
 		characters.push_back(Character::load(s));
@@ -55,9 +55,30 @@ Segment::Segment(const std::string& save, const std::string& folder)
 void Segment::save()
 {
 	std::vector<std::string> chrSaves;
+	int count = 0;
+	for(chrPtr& p : characters)
+	{
+		chrSaves.push_back(p->save(saveFile + std::to_string(count)));
+		count++;
+	}
 
-	for(auto& p : characters)
-		chrSaves
+	std::ofstream saveStream(saveFile);
+	saveStream.clear();
+	for(int i = 0; i < count; i++)
+	{
+		saveStream << chrSaves[i];
+		if(i < count - 1)
+			saveStream << std::endl;
+	}
+}
+
+
+bool Segment::getTileInfo(const gl::Vec2u& tilePos)
+{
+	if(map[tilePos.x][tilePos.y].solid)
+		return true;
+	else
+		return false;
 }
 
 

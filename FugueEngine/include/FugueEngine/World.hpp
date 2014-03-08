@@ -3,7 +3,6 @@
 
 #include <OOGL\oogl.hpp>
 #include <memory>
-#include "Character.hpp"
 #include "Segment.hpp"
 
 class World
@@ -14,9 +13,11 @@ public:
 	World();
 	World(const std::string&);  
 
-	void save(const std::string&);
+	void save();
 	void update(float);
 	void draw();
+	
+	bool testCollsion(const gl::Rectangle&);
 
 private:
 	std::vector<std::vector<segPtr>> worldMap;

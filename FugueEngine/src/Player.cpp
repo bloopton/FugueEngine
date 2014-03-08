@@ -1,9 +1,14 @@
 #include <FugueEngine\Player.hpp>
 #include <FugueEngine\Segment.hpp>
+#include <FugueEngine\World.hpp>
 #include <iostream>
 #include <fstream>
 
 std::vector<std::vector< gl::Animation>> Player::refrences;
+gl::Rectangle Player::bounds;
+gl::Rectangle Player::wcBoundsY;
+gl::Rectangle Player::wcBoundsX;
+
 
 Player::Player() {}
 
@@ -16,17 +21,11 @@ Player::Player(const std::string& file)
 	speed = 0.0005;
 
 	std::ifstream saveFile(file);
-	std::string line;
-
-	std::getline(saveFile, line);
-	name = line;
-
-	int dir;
-	saveFile >> dir;
-	direction = (Direction)dir;
-
+	saveFile >> name;
+	int dir; saveFile >> dir; direction = (Direction)dir;
 	saveFile >> position.x;
 	saveFile >> position.y;
+	saveFile.close();
 }
 
 void Player::update(float deltaTime)
@@ -39,8 +38,25 @@ void Player::update(float deltaTime)
 
 	if(keyPressed != -1) 
 	{
+		Direction prevDir = direction;
 		direction = (Direction) keyPressed;
-		move(deltaTime);
+		if(isColision())
+		{
+			if(prevDir == RIGHT)
+			{
+				direction = LEFT;
+				move(deltaTime);
+				direction = RIGHT;
+			}
+			else
+			{
+				direction = RIGHT;
+				move(deltaTime);
+				direction = LEFT;
+			}
+		}
+		else
+			move(deltaTime);
 
 		currentAnimation = &animations[1][direction];
 	}
@@ -49,7 +65,9 @@ void Player::update(float deltaTime)
 	
 
 	currentAnimation->setPosition(position);
-	currentAnimation->run();
+	if(currentAnimation->getState() != gl::Animation::running)
+		currentAnimation->run();
+
 	gl::setView(position * -1);
 }
 
@@ -59,28 +77,57 @@ void Player::draw()
 	currentAnimation->draw();
 }
 
+std::string Player::save(const std::string& file)
+{
+	std::string saveFile = file + ".plr";
+	std::ofstream saveStream(saveFile);
+	saveStream.clear();
+	saveStream << name << std::endl;
+	saveStream << direction << std::endl;
+	saveStream << position.x << std::endl;
+	saveStream << position.y;
+	saveStream.close();
+
+	return saveFile;
+}
+
+
+bool Player::isColision()
+{
+	gl::Rectangle rect;
+	if(direction == UP || direction == DOWN)
+		rect = wcBoundsY;
+	else
+		rect = wcBoundsX;
+
+	rect.position += position;
+
+	if(Character::worldRef->testCollsion(rect))
+		return true;
+}
+
 
 void Player::loadReferences()
 {
+	bounds = gl::Rectangle(gl::Vec2f(), Segment::tileSize * 8);
+	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -Segment::tileSize * 3), gl::Vec2f(Segment::tileSize * 6.5, Segment::tileSize * 2));
+	wcBoundsX = gl::Rectangle(gl::Vec2f(0, -Segment::tileSize * 3), gl::Vec2f(Segment::tileSize * 4, Segment::tileSize * 2));
+
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";
+	int fr = 500;
 
-	gl::Rectangle rect(gl::Vec2f(), Segment::tileSize * 8);
-	int fr = 300;
-
-
-	loadAnimations.push_back(gl::Animation(rect, folder + "/stand/up", 1, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/stand/down", 1, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/stand/right", 1, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/stand/left", 1, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/up", 1, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/down", 1, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/right", 1, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/left", 1, fr));
 	refrences.push_back(loadAnimations);
 	loadAnimations.clear();
 
-
-	loadAnimations.push_back(gl::Animation(rect, folder + "/walk/up", 4, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/walk/down", 4, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/walk/right", 4, fr));
-	loadAnimations.push_back(gl::Animation(rect, folder + "/walk/left", 4, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/walk/up", 4, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/walk/down", 4, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/walk/right", 4, fr));
+	loadAnimations.push_back(gl::Animation(bounds, folder + "/walk/left", 4, fr));
 	refrences.push_back(loadAnimations);
 	loadAnimations.clear();
 }

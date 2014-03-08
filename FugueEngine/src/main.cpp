@@ -5,9 +5,8 @@ int main()
 	sf::Window gameWindow;
 	genWindow(&gameWindow);
 	loadReferences();
-
-	World world("saves/");
-
+	World world("saves/Ryan");
+	Character::worldRef = &world;
 
 	sf::Clock clock;
 	float time = clock.getElapsedTime().asMilliseconds();
@@ -29,7 +28,7 @@ int main()
 		gl::clear();
 	}
 
-
+	world.save();
 	releseReferences();
 	gl::ooglTerminate();
 	return 0;

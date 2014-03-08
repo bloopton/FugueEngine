@@ -25,6 +25,7 @@ public:
 	void draw();
 	void update(float);
 	void save();
+	bool getTileInfo(const gl::Vec2u&);
 
 private:
 	const std::string saveFile;
