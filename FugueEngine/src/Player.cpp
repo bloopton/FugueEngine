@@ -115,7 +115,7 @@ void Player::loadReferences()
 
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";
-	int fr = 500;
+	int fr = 550;
 
 	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/up", 1, fr));
 	loadAnimations.push_back(gl::Animation(bounds, folder + "/stand/down", 1, fr));
