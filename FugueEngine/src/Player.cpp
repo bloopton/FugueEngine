@@ -109,9 +109,9 @@ bool Player::isColision()
 
 void Player::loadReferences()
 {
-	bounds = gl::Rectangle(gl::Vec2f(), Segment::tileSize * 8);
-	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -Segment::tileSize * 3), gl::Vec2f(Segment::tileSize * 6.5, Segment::tileSize * 2));
-	wcBoundsX = gl::Rectangle(gl::Vec2f(0, -Segment::tileSize * 3), gl::Vec2f(Segment::tileSize * 4, Segment::tileSize * 2));
+	bounds = gl::Rectangle(gl::Vec2f(), World::tileSize * 8);
+	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5, World::tileSize * 2));
+	wcBoundsX = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
 
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";

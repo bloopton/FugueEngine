@@ -1,66 +1,122 @@
 #include <FugueEngine\World.hpp>
 #include <iostream>
+#include <fstream>
 #include <math.h>
 
+const float World::tileSize = (float)scale/(float)tiles;
 
 World::World() {}
 
-World::World(const std::string& saveFile)
+World::World(const std::string& save)
+	: saveFile(save)
 {
-	worldMap.resize(size);
-	for(auto& i : worldMap)
+	segMap.resize(size);
+	for(auto& i : segMap)
 		i.resize(size);
 
-	worldMap[0][0].reset(new Segment(saveFile + "0-0", "resources/segments/0 0"));
+	segMap[0][0].reset(new Segment(gl::Vec2u(0, 0)));
+	segMap[1][0].reset(new Segment(gl::Vec2u(1, 0)));
+	loadSegInfo(gl::Vec2u(0, 0));
+	loadSegInfo(gl::Vec2u(1, 0));
+
+
+	std::ifstream fileStream(save);
+	std::vector<std::string> chrSaves;
+	while(fileStream.eof() == false)
+	{
+		std::string line;
+		std::getline(fileStream, line);
+
+		if(line.compare("") != 0)
+			chrSaves.push_back(line);
+	}
+	fileStream.close();
+
+	for(std::string s : chrSaves)
+		characters.push_back(Character::load(s));
+}
+
+
+void World::loadSegInfo(const gl::Vec2u& index)
+{
+	std::string file("resources/segments/" + std::to_string(index.x) + " " + std::to_string(index.x) + "/collisions.txt");
+	std::ifstream fileStream(file);
+
+	int segY = tiles * index.y;
+	int segX = tiles * index.x;
+	for(int y = tiles + segY - 1;  y >= segY; y--)
+		for(int x = segX; x < tiles + segX; x++)
+		{
+			if(fileStream.get() == '0')
+				tileMap[x][y].solid = false;
+			else
+				tileMap[x][y].solid = true;
+		}
+	fileStream.close();
 }
 
 
 void World::save()
 {
-	worldMap[0][0]->save();
+	std::vector<std::string> chrSaves;
+	int count = 0;
+	for(chrPtr& p : characters)
+	{
+		chrSaves.push_back(p->save(saveFile + std::to_string(count)));
+		count++;
+	}
+
+	std::ofstream saveStream(saveFile);
+	saveStream.clear();
+	for(int i = 0; i < count; i++)
+	{
+		saveStream << chrSaves[i];
+		if(i < count - 1)
+			saveStream << std::endl;
+	}
+	saveStream.close();
 }
 
 
 void World::update(float deltaTime)
 {
-	for(std::vector<segPtr>& v : worldMap)
-		for(segPtr& p : v)
-			if(p != NULL)
-				p->update(deltaTime);
+	for(chrPtr& c : characters)
+		c->update(deltaTime);
 }
 
 
 void World::draw()
 {
-	for(std::vector<segPtr>& v : worldMap)
+	for(std::vector<segPtr>& v : segMap)
 		for(segPtr& p : v)
 			if(p != NULL)
-				p->draw();
+				p->drawBase();
+
+	for(chrPtr& c : characters)
+		c->draw();
+
+	for(std::vector<segPtr>& v : segMap)
+		for(segPtr& p : v)
+			if(p != NULL)
+				p->drawTop();
 }
 
 
 bool World::testCollsion(const gl::Rectangle& rect)
 {
 	std::vector<gl::Vec2u> tiles;
-	
-	int xMax = (rect.position.x + rect.scale.x / 2.0f) / Segment::tileSize;
-	int xMin = (rect.position.x - rect.scale.x / 2.0f) / Segment::tileSize;
-	int yMax = (rect.position.y + rect.scale.y / 2.0f) / Segment::tileSize;
-	int yMin = (rect.position.y - rect.scale.y / 2.0f) / Segment::tileSize;
+	int xMax = (rect.position.x + rect.scale.x / 2.0f) / tileSize;
+	int xMin = (rect.position.x - rect.scale.x / 2.0f) / tileSize;
+	int yMax = (rect.position.y + rect.scale.y / 2.0f) / tileSize;
+	int yMin = (rect.position.y - rect.scale.y / 2.0f) / tileSize;
 
 	for(int x = xMin; x <= xMax; x++)
 		for(int y = yMin; y <= yMax; y++)
 			tiles.push_back(gl::Vec2u(x, y));
 
 	for(gl::Vec2u& v : tiles)
-	{
-		int xSeg = v.x / Segment::tiles;
-		v.x -= xSeg * Segment::tiles;
-		int ySeg = v.y / Segment::tiles;
-		v.y -= ySeg * Segment::tiles;
-
-		if(worldMap[xSeg][ySeg]->getTileInfo(v))
+		if(tileMap[v.x][v.y].solid)
 			return true;
-	}
+
 	return false;
 }
