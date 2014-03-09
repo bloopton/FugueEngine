@@ -18,7 +18,7 @@ Player::Player(const std::string& file)
 		animations.push_back(a);
 
 	currentAnimation = &animations[0][0];
-	speed = 0.0005;
+	speed = 0.0004;
 
 	std::ifstream saveFile(file);
 	saveFile >> name;

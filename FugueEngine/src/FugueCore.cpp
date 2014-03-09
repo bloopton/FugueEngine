@@ -4,7 +4,7 @@
 void genWindow(sf::Window* window)
 {
 	sf::VideoMode video = sf::VideoMode::getDesktopMode();
-	window->create(video, "Fugue");
+	window->create(video, "Fugue", sf::Style::Fullscreen);
 	window->setVerticalSyncEnabled(true);
 
 	gl::ooglInit();
