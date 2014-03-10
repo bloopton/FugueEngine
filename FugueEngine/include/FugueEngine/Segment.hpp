@@ -4,8 +4,6 @@
 #include <OOGL\oogl.hpp>
 #include <string>
 #include <memory>
-#include "Character.hpp"
-#include "Player.hpp"
 
 class Segment
 {

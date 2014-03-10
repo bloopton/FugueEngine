@@ -1,13 +1,12 @@
 #include <FugueEngine\Segment.hpp>
 #include <FugueEngine\World.hpp>
-#include <fstream>
 #include <iostream>
 
 namespace
 {
 	gl::Vec2f gridPosition(const gl::Vec2u& index)
 	{
-		gl::Vec2f pos = gl::Vec2f(World::scale * index.x, World::scale * index.y);
+		gl::Vec2f pos(GLfloat(World::scale * index.x), GLfloat(World::scale * index.y));
 		pos += float(World::scale) / 2.0f;
 		return pos;
 	}
@@ -16,9 +15,9 @@ namespace
 Segment::Segment() {}
 
 Segment::Segment(const gl::Vec2u& index)
-	: folder("resources/segments/" + std::to_string(index.x) + " " + std::to_string(index.x)),
-	baseImg(gl::Rectangle(gridPosition(index), World::scale), gl::Texture(folder + "/base.png")),
-	topImg(gl::Rectangle(gridPosition(index), World::scale), gl::Texture(folder + "/top.png")) {}
+	: folder("resources/segments/" + std::to_string(index.x) + " " + std::to_string(index.y)),
+	baseImg(gl::Rectangle(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/base.png")),
+	topImg(gl::Rectangle(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/top.png")) {}
 
 
 void Segment::drawBase()

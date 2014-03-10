@@ -1,15 +1,14 @@
 #include <FugueEngine\FugueCore.hpp>
 
 int main()
-{
+{ 
 	sf::Window gameWindow;
 	genWindow(&gameWindow);
 	loadReferences();
 	World world("saves/Ryan");
-	Character::worldRef = &world;
 
 	sf::Clock clock;
-	float time = clock.getElapsedTime().asMilliseconds();
+	float time = float(clock.getElapsedTime().asMilliseconds());
 	
 
 	bool running = true;
@@ -19,7 +18,7 @@ int main()
 			running = false;
 
 		float deltaTime = clock.getElapsedTime().asMilliseconds() - time;
-		time = clock.getElapsedTime().asMilliseconds();
+		time = float(clock.getElapsedTime().asMilliseconds());
 
 		world.update(deltaTime);
 		world.draw();

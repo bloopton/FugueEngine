@@ -18,7 +18,7 @@ Player::Player(const std::string& file)
 		animations.push_back(a);
 
 	currentAnimation = &animations[0][0];
-	speed = 0.0004;
+	speed = 0.0004f;
 
 	std::ifstream saveFile(file);
 	saveFile >> name;
@@ -104,15 +104,17 @@ bool Player::isColision()
 
 	if(Character::worldRef->testCollsion(rect))
 		return true;
+
+	return false;
 }
 
 
 void Player::loadReferences()
 {
 	bounds = gl::Rectangle(gl::Vec2f(), World::tileSize * 8);
-	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5, World::tileSize * 2));
+	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5f, World::tileSize * 2));
 	wcBoundsX = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
-
+	
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";
 	int fr = 550;

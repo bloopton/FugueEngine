@@ -10,6 +10,7 @@ World::World() {}
 World::World(const std::string& save)
 	: saveFile(save)
 {
+	Character::worldRef = this;
 	segMap.resize(size);
 	for(auto& i : segMap)
 		i.resize(size);
@@ -87,28 +88,29 @@ void World::update(float deltaTime)
 
 void World::draw()
 {
-	for(std::vector<segPtr>& v : segMap)
-		for(segPtr& p : v)
+	for(auto& v : segMap)
+		for(auto& p : v)
 			if(p != NULL)
 				p->drawBase();
 
 	for(chrPtr& c : characters)
 		c->draw();
 
-	for(std::vector<segPtr>& v : segMap)
-		for(segPtr& p : v)
+
+	for(auto& v : segMap)
+		for(auto& p : v)
 			if(p != NULL)
 				p->drawTop();
 }
 
 
 bool World::testCollsion(const gl::Rectangle& rect)
-{
+{    
 	std::vector<gl::Vec2u> tiles;
-	int xMax = (rect.position.x + rect.scale.x / 2.0f) / tileSize;
-	int xMin = (rect.position.x - rect.scale.x / 2.0f) / tileSize;
-	int yMax = (rect.position.y + rect.scale.y / 2.0f) / tileSize;
-	int yMin = (rect.position.y - rect.scale.y / 2.0f) / tileSize;
+	int xMax = int((rect.position.x + rect.scale.x / 2.0f) / tileSize);
+	int xMin = int((rect.position.x - rect.scale.x / 2.0f) / tileSize);
+	int yMax = int((rect.position.y + rect.scale.y / 2.0f) / tileSize);
+	int yMin = int((rect.position.y - rect.scale.y / 2.0f) / tileSize);
 
 	for(int x = xMin; x <= xMax; x++)
 		for(int y = yMin; y <= yMax; y++)

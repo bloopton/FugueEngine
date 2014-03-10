@@ -33,6 +33,8 @@ gl::Vec2f Character::getDirectionVec(Direction dir)
 	case LEFT:
 		return gl::Vec2f(-1, 0);
 		break;
+	default:
+		return gl::Vec2f(0, 0);
 	}
 }
 
