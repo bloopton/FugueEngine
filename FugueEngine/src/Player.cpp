@@ -23,12 +23,7 @@ Player::Player() {}
 
 Player::Player(std::ifstream& stream)
 {
-	for(auto& a : refrences)
-		animations.push_back(a);
-
-	for(auto& a : animations)
-		for(auto& b : a)
-			b.run();
+	animations = refrences;
 
 	speed = 0.0004f;
 
@@ -140,6 +135,10 @@ void Player::loadReferences()
 	loadAnimations.push_back(gl::Animation(bounds, folder + "/walk/left", 4, fr));
 	refrences.push_back(loadAnimations);
 	loadAnimations.clear();
+
+	for(auto& a : refrences)
+		for(auto& b : a)
+			b.run();
 }
 
 void Player::releaseReferences()

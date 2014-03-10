@@ -20,7 +20,7 @@ public:
 	virtual void draw();
 
 protected:
-	static std::vector<std::vector< gl::Animation>> refrences;
+	static std::vector<std::vector<gl::Animation>> refrences;
 	static gl::Rectangle bounds, wcBoundsY, wcBoundsX;
 
 	virtual bool isColision();
