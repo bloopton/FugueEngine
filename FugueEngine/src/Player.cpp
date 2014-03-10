@@ -9,87 +9,85 @@ gl::Rectangle Player::bounds;
 gl::Rectangle Player::wcBoundsY;
 gl::Rectangle Player::wcBoundsX;
 
+namespace
+{
+	enum Action
+	{
+		STAND = 0,
+		WALK
+	};
+}
+
 
 Player::Player() {}
 
-Player::Player(const std::string& file)
+Player::Player(std::ifstream& stream)
 {
 	for(auto& a : refrences)
 		animations.push_back(a);
 
-	currentAnimation = &animations[0][0];
+	for(auto& a : animations)
+		for(auto& b : a)
+			b.run();
+
 	speed = 0.0004f;
 
-	std::ifstream saveFile(file);
-	saveFile >> name;
-	int dir; saveFile >> dir; direction = (Direction)dir;
-	saveFile >> position.x;
-	saveFile >> position.y;
-	saveFile.close();
-}
-
-void Player::update(float deltaTime)
-{
-	int keyPressed = -1;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))		keyPressed = UP;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))		keyPressed = DOWN;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))		keyPressed = RIGHT;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))		keyPressed = LEFT;
-
-	if(keyPressed != -1) 
-	{
-		Direction prevDir = direction;
-		direction = (Direction) keyPressed;
-		if(isColision())
-		{
-			if(prevDir == RIGHT)
-			{
-				direction = LEFT;
-				move(deltaTime);
-				direction = RIGHT;
-			}
-			else
-			{
-				direction = RIGHT;
-				move(deltaTime);
-				direction = LEFT;
-			}
-		}
-		else
-			move(deltaTime);
-
-		currentAnimation = &animations[1][direction];
-	}
-	else
-		currentAnimation = &animations[0][direction];
-	
-
-	currentAnimation->setPosition(position);
-	if(currentAnimation->getState() != gl::Animation::running)
-		currentAnimation->run();
-
-	gl::setView(position * -1);
+	stream >> name;
+	stream >> direction;
+	stream >> position.x;
+	stream >> position.y;
 }
 
 
 void Player::draw()
 {
-	currentAnimation->draw();
+	animations[action][direction].draw();
 }
 
-std::string Player::save(const std::string& file)
+
+void Player::update(float deltaTime)
 {
-	std::string saveFile = file + ".plr";
-	std::ofstream saveStream(saveFile);
-	saveStream.clear();
-	saveStream << name << std::endl;
-	saveStream << direction << std::endl;
-	saveStream << position.x << std::endl;
-	saveStream << position.y;
-	saveStream.close();
-
-	return saveFile;
+	     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))	walk(deltaTime, UP);
+	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))	walk(deltaTime, DOWN);
+	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))	walk(deltaTime, RIGHT);
+	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))	walk(deltaTime, LEFT);
+	else stand();
+		
+	animations[action][direction].setPosition(position);
+	gl::setView(position * -1);
 }
+
+
+void Player::stand()
+{
+	action = STAND;
+}
+
+
+void Player::walk(float deltaTime, Direction dir)
+{
+	action = WALK;
+	Direction prevDir = (Direction)direction;
+	direction = dir;
+	if(isColision())
+	{
+		if(prevDir == RIGHT)
+		{
+			direction = LEFT;
+			move(deltaTime);
+			direction = RIGHT;
+		}
+		else
+		{
+			direction = RIGHT;
+			move(deltaTime);
+			direction = LEFT;
+		}
+	}
+	else
+		move(deltaTime);
+}
+
 
 
 bool Player::isColision()
@@ -102,10 +100,20 @@ bool Player::isColision()
 
 	rect.position += position;
 
-	if(Character::worldRef->testCollsion(rect))
+	if(World::testCollsion(rect))
 		return true;
 
 	return false;
+}
+
+
+void Player::save(std::ofstream& stream)
+{
+	stream << "Player" << std::endl;
+	stream << name << std::endl;
+	stream << direction << std::endl;
+	stream << position.x << std::endl;
+	stream << position.y << std::endl;
 }
 
 

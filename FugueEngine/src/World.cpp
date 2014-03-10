@@ -4,13 +4,14 @@
 #include <math.h>
 
 const float World::tileSize = (float)scale/(float)tiles;
+World* World::currentWorld = NULL;
 
 World::World() {}
 
 World::World(const std::string& save)
 	: saveFile(save)
 {
-	Character::worldRef = this;
+	currentWorld = this;
 	segMap.resize(size);
 	for(auto& i : segMap)
 		i.resize(size);
@@ -21,20 +22,17 @@ World::World(const std::string& save)
 	loadSegInfo(gl::Vec2u(1, 0));
 
 
-	std::ifstream fileStream(save);
-	std::vector<std::string> chrSaves;
-	while(fileStream.eof() == false)
+	std::ifstream stream(save);
+	bool loading = true;
+	while(loading == true)
 	{
-		std::string line;
-		std::getline(fileStream, line);
-
-		if(line.compare("") != 0)
-			chrSaves.push_back(line);
+		chrPtr newChr = Character::load(stream);
+		if(newChr == NULL) 
+			loading = false;
+		else 
+			characters.push_back(std::move(newChr));
 	}
-	fileStream.close();
-
-	for(std::string s : chrSaves)
-		characters.push_back(Character::load(s));
+	stream.close();
 }
 
 
@@ -59,22 +57,9 @@ void World::loadSegInfo(const gl::Vec2u& index)
 
 void World::save()
 {
-	std::vector<std::string> chrSaves;
-	int count = 0;
-	for(chrPtr& p : characters)
-	{
-		chrSaves.push_back(p->save(saveFile + std::to_string(count)));
-		count++;
-	}
-
 	std::ofstream saveStream(saveFile);
-	saveStream.clear();
-	for(int i = 0; i < count; i++)
-	{
-		saveStream << chrSaves[i];
-		if(i < count - 1)
-			saveStream << std::endl;
-	}
+	for(auto& c : characters)
+		c->save(saveStream);
 	saveStream.close();
 }
 
@@ -117,7 +102,7 @@ bool World::testCollsion(const gl::Rectangle& rect)
 			tiles.push_back(gl::Vec2u(x, y));
 
 	for(gl::Vec2u& v : tiles)
-		if(tileMap[v.x][v.y].solid)
+		if(World::currentWorld->tileMap[v.x][v.y].solid)
 			return true;
 
 	return false;

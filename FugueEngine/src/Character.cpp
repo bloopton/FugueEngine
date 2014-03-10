@@ -2,22 +2,24 @@
 #include <FugueEngine\Player.hpp>
 #include <FugueEngine\World.hpp>
 #include <FugueEngine\Segment.hpp>
+#include <iostream>
 
-World* Character::worldRef = NULL;
-
-chrPtr Character::load(const std::string& file)
+chrPtr Character::load(std::ifstream& stream)
 {
-	chrPtr loadedChr;
-	std::string type(file.end() - 4, file.end());
+	if(stream.eof())
+		return NULL;
 
-	if(type.compare(".plr") == 0)
-		loadedChr.reset(new Player(file));
+	std::string type;
+	stream >> type;
 
-	return loadedChr;
+	if(type.compare("Player") == 0)
+		return chrPtr(new Player(stream));
+
+	else return NULL;
 }
 
 
-gl::Vec2f Character::getDirectionVec(Direction dir)
+gl::Vec2f Character::getDirectionVec(int dir)
 {
 	switch (dir)
 	{

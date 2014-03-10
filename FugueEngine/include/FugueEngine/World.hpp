@@ -23,9 +23,12 @@ public:
 	void update(float);
 	void draw();
 	void save();
-	bool testCollsion(const gl::Rectangle&);
+
+	static bool testCollsion(const gl::Rectangle&);
 
 private:
+	static World* currentWorld;
+
 	tile tileMap[tiles * 2][tiles];
 	std::vector<std::vector<segPtr>> segMap;
 	std::vector<chrPtr> characters;

@@ -5,7 +5,6 @@ void genWindow(sf::Window* window)
 {
 	sf::VideoMode video = sf::VideoMode::getDesktopMode();
 	window->create(video, "Fugue");
-	window->setVerticalSyncEnabled(true);
 
 	gl::ooglInit();
 	gl::setAspectRatio(gl::Vec2u(video.width, video.height));
