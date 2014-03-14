@@ -1,13 +1,11 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-#include "Character.hpp"
-#include <fstream>
-#include <SFML\System.hpp>
+#include "Person.hpp"
 #include <SFML\Window.hpp>
-#include <SFML\Audio.hpp>
+#include <fstream>
 
-class Player : public Character
+class Player : public Person
 {
 public:
 	static void loadReferences();
@@ -21,10 +19,6 @@ public:
 
 protected:
 	static std::vector<std::vector<gl::Animation>> refrences;
-	static gl::Rectangle bounds, wcBoundsY, wcBoundsX;
-
 	virtual bool isColision();
-	void stand();
-	void walk(float, Direction);
 };
 #endif

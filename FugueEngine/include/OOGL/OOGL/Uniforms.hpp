@@ -3,6 +3,7 @@
 
 #include "Vec2.hpp"
 #include "Vec3.hpp"
+#include "ooglCore.hpp"
 
 namespace gl
 {
@@ -11,12 +12,12 @@ namespace gl
 		Vec2f position;
 		Vec2f scale;
 		Vec3f color;
-		GLfloat alpha;
+		GLclampf alpha;
 
 		Uniforms() : scale(1), alpha(0){}
 
 		Uniforms(Vec2f inPosition, Vec2f inScale)
-			: position(inPosition), scale(inScale), alpha(0){}
+			: position(inPosition), scale(inScale), alpha(0) {}
 
 		void bind(); //defined in ooglCore.cpp
 	}; 

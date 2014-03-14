@@ -5,18 +5,6 @@
 #include <fstream>
 
 std::vector<std::vector< gl::Animation>> Player::refrences;
-gl::Rectangle Player::bounds;
-gl::Rectangle Player::wcBoundsY;
-gl::Rectangle Player::wcBoundsX;
-
-namespace
-{
-	enum Action
-	{
-		STAND = 0,
-		WALK
-	};
-}
 
 
 Player::Player() {}
@@ -53,45 +41,14 @@ void Player::update(float deltaTime)
 }
 
 
-void Player::stand()
-{
-	action = STAND;
-}
-
-
-void Player::walk(float deltaTime, Direction dir)
-{
-	action = WALK;
-	Direction prevDir = (Direction)direction;
-	direction = dir;
-	if(isColision())
-	{
-		if(prevDir == RIGHT)
-		{
-			direction = LEFT;
-			move(deltaTime);
-			direction = RIGHT;
-		}
-		else
-		{
-			direction = RIGHT;
-			move(deltaTime);
-			direction = LEFT;
-		}
-	}
-	else
-		move(deltaTime);
-}
-
-
 
 bool Player::isColision()
 {
 	gl::Rectangle rect;
 	if(direction == UP || direction == DOWN)
-		rect = wcBoundsY;
+		rect = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5f, World::tileSize * 2));
 	else
-		rect = wcBoundsX;
+		rect = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
 
 	rect.position += position;
 
@@ -114,9 +71,7 @@ void Player::save(std::ofstream& stream)
 
 void Player::loadReferences()
 {
-	bounds = gl::Rectangle(gl::Vec2f(), World::tileSize * 8);
-	wcBoundsY = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5f, World::tileSize * 2));
-	wcBoundsX = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
+	gl::Rectangle bounds(gl::Vec2f(), World::tileSize * 8);
 	
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";
