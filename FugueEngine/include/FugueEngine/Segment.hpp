@@ -17,7 +17,7 @@ public:
 
 private:
 	const std::string saveFile;
-	gl::Entity baseImg, topImg;
+	gl::Sprite baseImg, topImg;
 };
 
 typedef std::unique_ptr<Segment> segPtr;

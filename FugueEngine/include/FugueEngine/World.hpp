@@ -24,7 +24,7 @@ public:
 	void draw();
 	void save();
 
-	static bool testCollsion(const gl::Rectangle&);
+	static bool testCollsion(const gl::VertexArray&);
 
 private:
 	static World* currentWorld;

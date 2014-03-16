@@ -4,7 +4,6 @@
 #include "../GLEW/glew.h"
 #include <math.h>
 
-
 namespace gl
 {
 	template<class T>
@@ -14,7 +13,6 @@ namespace gl
 		Vec2()					: x(0), y(0) {}
 		Vec2(T Z)				: x(Z), y(Z) {}
 		Vec2(T X, T Y)			: x(X), y(Y) {}
-
 
 		T magnitude() const
 		{
@@ -49,7 +47,7 @@ namespace gl
 	};
 
 	template<class T>
-	Vec2<T> operator+(T z, const Vec2<T>& vec2)	
+	Vec2<T> operator+(T z, const Vec2<T>& vec2)
 	{ return Vec2<T>(vec2.x + z, vec2.y + z); }
 
 	template<class T>

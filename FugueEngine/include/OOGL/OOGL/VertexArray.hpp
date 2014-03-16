@@ -1,12 +1,11 @@
 #ifndef OOGLVERTEXARRAY_HPP
 #define OOGLVERTEXARRAY_HPP
 
-
-#include "Vec2.hpp"
 #include "../GLEW/glew.h"
+#include "OpenglObject.hpp"
+#include "Vec2.hpp"
 #include <memory>
 #include <vector>
-#include <string>
 
 namespace gl
 {
@@ -20,41 +19,24 @@ namespace gl
 			: X(x), Y(y), U(u), V(v) {}
 	};
 
-
-	class VertexArray
+	class VertexArray : public OpenglObject
 	{
-
 	public:
+		Vec2f point, size;
+
 		VertexArray();
 		VertexArray(const std::vector<Vertex>&);
+		VertexArray(const Vec2f& inPosition, GLfloat inScale);
+		VertexArray(const Vec2f& inPosition, const Vec2f& inScale);
 
-		Vertex& operator[](unsigned int);
-		const Vertex& operator[](unsigned int) const;
+		virtual void bind() const;
+		virtual void destroy();
 		int getDataSize() const;
 
-		void bind() const;
-		void setNull();
-		void genVertexArray();
-
 	private:
-		struct vaHandle
-		{
-			GLuint ID, bufferID;
-
-			vaHandle(GLuint id, GLuint buffID) : ID(id), bufferID(buffID) {}
-
-			~vaHandle()
-			{
-				if(ID != 0)
-				{
-					glDeleteBuffers(1, &bufferID);
-					glDeleteVertexArrays(1, &ID);
-				}
-			}
-		};
-
+		struct VertexArrayHandle;
 		std::vector<Vertex> vertices;
-		std::shared_ptr<const vaHandle> glHandle;
+		std::shared_ptr<const VertexArrayHandle> vaHandle;
 	};
 }
 #endif 

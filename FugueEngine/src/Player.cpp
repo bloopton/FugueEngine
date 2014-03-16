@@ -36,7 +36,7 @@ void Player::update(float deltaTime)
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))	walk(deltaTime, LEFT);
 	else stand();
 		
-	animations[action][direction].setPosition(position);
+	animations[action][direction].point = position;
 	gl::setView(position * -1);
 }
 
@@ -44,13 +44,13 @@ void Player::update(float deltaTime)
 
 bool Player::isColision()
 {
-	gl::Rectangle rect;
+	gl::VertexArray rect;
 	if(direction == UP || direction == DOWN)
-		rect = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5f, World::tileSize * 2));
+		rect = gl::VertexArray(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 6.5f, World::tileSize * 2));
 	else
-		rect = gl::Rectangle(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
+		rect = gl::VertexArray(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
 
-	rect.position += position;
+	rect.point += position;
 
 	if(World::testCollsion(rect))
 		return true;
@@ -71,7 +71,7 @@ void Player::save(std::ofstream& stream)
 
 void Player::loadReferences()
 {
-	gl::Rectangle bounds(gl::Vec2f(), World::tileSize * 8);
+	gl::VertexArray bounds(gl::Vec2f(), World::tileSize * 8);
 	
 	std::vector<gl::Animation> loadAnimations;
 	std::string folder = "resources/characters/robot";

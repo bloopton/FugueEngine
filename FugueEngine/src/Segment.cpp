@@ -16,8 +16,8 @@ Segment::Segment() {}
 
 Segment::Segment(const gl::Vec2u& index)
 	: folder("resources/segments/" + std::to_string(index.x) + " " + std::to_string(index.y)),
-	baseImg(gl::Rectangle(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/base.png")),
-	topImg(gl::Rectangle(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/top.png")) {}
+	baseImg(gl::VertexArray(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/base.png")),
+	topImg(gl::VertexArray(gridPosition(index), GLfloat(World::scale)), gl::Texture(folder + "/top.png")) {}
 
 
 void Segment::drawBase()
