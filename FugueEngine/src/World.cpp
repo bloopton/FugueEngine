@@ -92,10 +92,10 @@ void World::draw()
 bool World::testCollsion(const gl::VertexArray& rect)
 {    
 	std::vector<gl::Vec2u> tiles;
-	int xMax = int((rect.point.x + rect.size.x / 2.0f) / tileSize);
-	int xMin = int((rect.point.x - rect.size.x / 2.0f) / tileSize);
-	int yMax = int((rect.point.y + rect.size.y / 2.0f) / tileSize);
-	int yMin = int((rect.point.y - rect.size.y / 2.0f) / tileSize);
+	int xMax = int((rect.getPoint().x + rect.getSize().x / 2.0f) / tileSize);
+	int xMin = int((rect.getPoint().x - rect.getSize().x / 2.0f) / tileSize);
+	int yMax = int((rect.getPoint().y + rect.getSize().y / 2.0f) / tileSize);
+	int yMin = int((rect.getPoint().y - rect.getSize().y / 2.0f) / tileSize);
 
 	for(int x = xMin; x <= xMax; x++)
 		for(int y = yMin; y <= yMax; y++)

@@ -1,13 +1,13 @@
-#include <FugueEngine\Person.hpp>
+#include <FugueEngine\Walk.hpp>
 
 
-void Person::stand()
+void Walk::stand()
 {
 	action = STAND;
 }
 
 
-void Person::walk(float deltaTime, Direction dir)
+void Walk::walk(float deltaTime, Direction dir)
 {
 	action = WALK;
 	Direction prevDir = (Direction)direction;

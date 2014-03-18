@@ -1,9 +1,9 @@
-#ifndef PERSON_HPP
-#define PERSON_HPP
+#ifndef WALK_HPP
+#define WALK_HPP
 
 #include "Character.hpp"
 
-class Person : public Character
+class Walk : public Character
 {
 protected:
 	static const int STAND = 0;

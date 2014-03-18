@@ -1,11 +1,11 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "Person.hpp"
+#include "Walk.hpp"
 #include <SFML\Window.hpp>
 #include <fstream>
 
-class Player : public Person
+class Player : public Walk
 {
 public:
 	static void loadReferences();
@@ -14,11 +14,10 @@ public:
 	Player();
 	Player(std::ifstream&);
 	virtual void save(std::ofstream&);
-	virtual void update(GLfloat);
-	virtual void draw();
+	virtual void update(float);
+	virtual void draw() const;
 
 protected:
-	static std::vector<std::vector<gl::Animation>> refrences;
 	virtual bool isColision();
 };
 #endif

@@ -4,8 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-std::vector<std::vector< gl::Animation>> Player::refrences;
-
+static std::vector<std::vector<gl::Animation>> refrences;
 
 Player::Player() {}
 
@@ -22,7 +21,7 @@ Player::Player(std::ifstream& stream)
 }
 
 
-void Player::draw()
+void Player::draw() const
 {
 	animations[action][direction].draw();
 }
@@ -36,7 +35,7 @@ void Player::update(float deltaTime)
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))	walk(deltaTime, LEFT);
 	else stand();
 		
-	animations[action][direction].point = position;
+	animations[action][direction].setPoint(position);
 	gl::setView(position * -1);
 }
 
@@ -50,7 +49,7 @@ bool Player::isColision()
 	else
 		rect = gl::VertexArray(gl::Vec2f(0, -World::tileSize * 3), gl::Vec2f(World::tileSize * 4, World::tileSize * 2));
 
-	rect.point += position;
+	rect.translate(position);
 
 	if(World::testCollsion(rect))
 		return true;

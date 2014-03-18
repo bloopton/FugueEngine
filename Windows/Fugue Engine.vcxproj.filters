@@ -24,13 +24,19 @@
     <ClInclude Include="..\FugueEngine\include\FugueEngine\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\FugueEngine\include\FugueEngine\FugueCore.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Person.hpp">
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Walk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Behaviors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\GameObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +59,7 @@
     <ClCompile Include="..\FugueEngine\src\FugueCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\FugueEngine\src\Person.cpp">
+    <ClCompile Include="..\FugueEngine\src\Walk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
