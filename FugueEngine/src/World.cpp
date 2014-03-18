@@ -51,7 +51,7 @@ void World::loadSegInfo(const gl::Vec2u& index)
 			else
 				tileMap[x][y].solid = true;
 		}
-	fileStream.close();
+		fileStream.close();
 }
 
 

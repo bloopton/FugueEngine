@@ -1,11 +1,11 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "Walk.hpp"
+#include <FugueEngine/Character.hpp>
 #include <SFML\Window.hpp>
 #include <fstream>
 
-class Player : public Walk
+class Player : public Character
 {
 public:
 	static void loadReferences();
@@ -13,11 +13,10 @@ public:
 
 	Player();
 	Player(std::ifstream&);
+	virtual void load(std::ifstream&);
 	virtual void save(std::ofstream&);
 	virtual void update(float);
-	virtual void draw() const;
 
-protected:
-	virtual bool isColision();
+	virtual void setAnimations();
 };
 #endif

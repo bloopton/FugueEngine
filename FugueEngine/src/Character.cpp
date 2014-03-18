@@ -1,8 +1,6 @@
 #include <FugueEngine\Character.hpp>
 #include <FugueEngine\Player.hpp>
-#include <FugueEngine\World.hpp>
-#include <FugueEngine\Segment.hpp>
-#include <iostream>
+#include <fstream>
 
 chrPtr Character::load(std::ifstream& stream)
 {
@@ -18,33 +16,36 @@ chrPtr Character::load(std::ifstream& stream)
 	else return NULL;
 }
 
-
-gl::Vec2f Character::getDirectionVec(int dir)
+Character::Direction Character::getDirection()
 {
-	switch (dir)
-	{
-	case UP:
-		return gl::Vec2f(0,1);
-		break;
-	case DOWN:
-		return gl::Vec2f(0, -1);
-		break;
-	case RIGHT:
-		return gl::Vec2f(1, 0);
-		break;
-	case LEFT:
-		return gl::Vec2f(-1, 0);
-		break;
-	default:
-		return gl::Vec2f(0, 0);
-	}
+	if(direction == Movable::UP)		 return UP;
+	else if(direction == Movable::DOWN)  return DOWN;
+	else if(direction == Movable::RIGHT) return RIGHT; 
+	else   return LEFT;
+}
+
+void Character::setDraw(std::array<gl::Animation, 4>& animation)
+{
+	gl::Animation* current = &animation[getDirection()];
+	current->setPoint(position);
+	currentDraw = current;
 }
 
 
-void Character::move(float deltaTime)
+void Character::move(float, gl::Vec2f newDir)
 {
-	position += speed * deltaTime * getDirectionVec(direction);
+	direction = newDir;
+	position += direction * speed;
 
-	if(isColision())
-		position -= speed * deltaTime * getDirectionVec(direction);
+	setDraw(drawMove);
+}
+
+void Character::testCollision()
+{
+
+}
+
+void Character::setCollision()
+{
+
 }
