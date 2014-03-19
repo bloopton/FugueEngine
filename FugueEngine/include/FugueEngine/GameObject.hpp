@@ -1,8 +1,8 @@
 #ifndef GAMEOBJECT_HPP
 #define GAMEOBJECT_HPP
 
-#include <FugueEngine/Behaviors.hpp>
 #include <OOGL\oogl.hpp>
+#include <memory>
 
 class GameObject : public gl::Drawable
 {
@@ -14,4 +14,5 @@ public:
 	virtual void update(float) = 0;
 	virtual ~GameObject() {}
 };
+typedef std::unique_ptr<GameObject> objPtr;
 #endif

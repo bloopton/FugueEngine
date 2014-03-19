@@ -2,7 +2,7 @@
 #define WORLD_HPP
 
 #include <OOGL\oogl.hpp>
-#include "Character.hpp"
+#include "GameObject.hpp"
 #include "Segment.hpp"
 #include <memory>
 
@@ -31,9 +31,10 @@ private:
 
 	tile tileMap[tiles * 2][tiles];
 	std::vector<std::vector<segPtr>> segMap;
-	std::vector<chrPtr> characters;
+	std::vector<objPtr> gameObjects;
 	std::string saveFile;
 
+	void loadGameObjects();
 	void loadSegInfo(const gl::Vec2u&);
 };
 #endif // !WORLD

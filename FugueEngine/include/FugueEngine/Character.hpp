@@ -2,6 +2,7 @@
 #define CHARACTER_HPP
 
 #include <FugueEngine\GameObject.hpp>
+#include <FugueEngine\Behaviors.hpp>
 #include <array>
 #include <fstream>
 #include <memory>
@@ -10,9 +11,6 @@
 class World;
 class Character : public GameObject, public Movable, public Collidable, public Loadable
 {
-public:
-	static std::unique_ptr<Character> load(std::ifstream&);
-
 protected:
 	std::string name;
 	gl::Vec2f position, direction;
@@ -24,10 +22,8 @@ protected:
 	void setDraw(std::array<gl::Animation, 4>&);
 
 	virtual void move(float, gl::Vec2f);
-	virtual void testCollision();
-	virtual void setCollision();
+	virtual void testCollision(const gl::VertexArray&);
+	virtual void setCollision(const gl::VertexArray&);
 	virtual void setAnimations() = 0;
 };
-
-typedef std::unique_ptr<Character> chrPtr;
 #endif

@@ -4,14 +4,34 @@
 #include <iostream>
 #include <fstream>
 
-std::array<gl::Animation, 4> refDrawStill, refDrawStillMove; 
+static std::array<gl::Animation, 4> refDrawStill, refDrawStillMove; 
 
 Player::Player() {}
 
-Player::Player(std::ifstream& stream)
+objPtr Player::load(std::ifstream& stream)
 {
-	load(stream);
-	setAnimations();
+	std::unique_ptr<Player> Plyr(new Player());
+
+	stream >> Plyr->name;
+	stream >> Plyr->position.x;
+	stream >> Plyr->position.y;
+	stream >> Plyr->direction.x;
+	stream >> Plyr->direction.y;
+	stream >> Plyr->speed;
+	Plyr->setAnimations();
+
+	return static_cast<objPtr>(std::move(Plyr));
+}
+
+void Player::save(std::ofstream& stream) const
+{
+	stream << "Player" << std::endl;
+	stream << name << std::endl;
+	stream << position.x << std::endl;
+	stream << position.y << std::endl;
+	stream << direction.x << std::endl;
+	stream << direction.y << std::endl;
+	stream << speed << std::endl;
 }
 
 
@@ -27,38 +47,16 @@ void Player::update(float deltaTime)
 }
 
 
-
-void Player::load(std::ifstream& stream)
-{
-	stream >> name;
-	stream >> position.x;
-	stream >> position.y;
-	stream >> direction.x;
-	stream >> direction.y;
-	stream >> speed;
-}
-
-void Player::save(std::ofstream& stream)
-{
-	stream << "Player" << std::endl;
-	stream << name << std::endl;
-	stream << position.x << std::endl;
-	stream << position.y << std::endl;
-	stream << direction.x << std::endl;
-	stream << direction.y << std::endl;
-	stream << speed << std::endl;
-}
-
 void Player::setAnimations()
 {
 	drawStill = refDrawStill;
 	drawMove  = refDrawStillMove;
-
 	for(auto& a : drawStill) a.setPoint(position);
 	for(auto& a : drawMove) a.setPoint(position);
-
 	setDraw(drawStill);
 }
+
+
 
 void Player::loadReferences()
 {

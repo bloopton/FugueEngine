@@ -12,9 +12,8 @@ public:
 	static void releaseReferences();
 
 	Player();
-	Player(std::ifstream&);
-	virtual void load(std::ifstream&);
-	virtual void save(std::ofstream&);
+	static objPtr load(std::ifstream&);
+	virtual void save(std::ofstream&) const;
 	virtual void update(float);
 
 	virtual void setAnimations();

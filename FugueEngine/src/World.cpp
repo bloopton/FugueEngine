@@ -1,4 +1,7 @@
 #include <FugueEngine\World.hpp>
+#include <FugueEngine\Character.hpp>
+#include <FugueEngine\Player.hpp>
+#include <FugueEngine\Behaviors.hpp>
 #include <iostream>
 #include <fstream>
 #include <math.h>
@@ -21,16 +24,22 @@ World::World(const std::string& save)
 	loadSegInfo(gl::Vec2u(0, 0));
 	loadSegInfo(gl::Vec2u(1, 0));
 
+	loadGameObjects();
+}
 
-	std::ifstream stream(save);
+
+void World::loadGameObjects()
+{
+	std::ifstream stream(saveFile);
 	bool loading = true;
 	while(loading == true)
 	{
-		chrPtr newChr = Character::load(stream);
-		if(newChr == NULL) 
-			loading = false;
-		else 
-			characters.push_back(std::move(newChr));
+		objPtr newObj = NULL;
+		std::string type; stream >> type;
+		if(type.compare("Player") == 0) newObj = Player::load(stream);
+
+		if(newObj == NULL) loading = false;
+		else gameObjects.push_back(std::move(newObj));
 	}
 	stream.close();
 }
@@ -58,15 +67,18 @@ void World::loadSegInfo(const gl::Vec2u& index)
 void World::save()
 {
 	std::ofstream saveStream(saveFile);
-	for(auto& c : characters)
-		c->save(saveStream);
+	for(auto& c : gameObjects)
+	{
+		Loadable* l = dynamic_cast<Loadable*>(c.get());
+		if(l) l->save(saveStream);
+	}
 	saveStream.close();
 }
 
 
 void World::update(float deltaTime)
 {
-	for(chrPtr& c : characters)
+	for(objPtr& c : gameObjects) 
 		c->update(deltaTime);
 }
 
@@ -78,9 +90,8 @@ void World::draw()
 			if(p != NULL)
 				p->drawBase();
 
-	for(chrPtr& c : characters)
+	for(objPtr& c : gameObjects)
 		c->draw();
-
 
 	for(auto& v : segMap)
 		for(auto& p : v)

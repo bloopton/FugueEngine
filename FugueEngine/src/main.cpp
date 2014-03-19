@@ -9,7 +9,7 @@ int main()
 
 	sf::Clock clock;
 	float time = float(clock.getElapsedTime().asMilliseconds());
-	
+
 
 	bool running = true;
 	while(running)
