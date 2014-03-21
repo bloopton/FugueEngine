@@ -22,8 +22,6 @@ protected:
 	void setDraw(std::array<gl::Animation, 4>&);
 
 	virtual void move(float, gl::Vec2f);
-	virtual void testCollision(const gl::VertexArray&);
-	virtual void setCollision(const gl::VertexArray&);
 	virtual void setAnimations() = 0;
 };
 #endif

@@ -20,8 +20,8 @@ class Collidable
 public:
 	virtual ~Collidable() {};
 protected:
-	virtual void testCollision(const gl::VertexArray&) = 0;
-	virtual void setCollision(const gl::VertexArray&) = 0;
+	virtual bool isCollision() = 0;
+	virtual void setCollision() = 0;
 };
 
 class Loadable

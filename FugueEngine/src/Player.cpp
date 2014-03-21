@@ -5,6 +5,7 @@
 #include <fstream>
 
 static std::array<gl::Animation, 4> refDrawStill, refDrawStillMove; 
+static std::vector<gl::Vec2i> collisonBoundsV, collisonBoundsH;
 
 Player::Player() {}
 
@@ -46,6 +47,37 @@ void Player::update(float deltaTime)
 	gl::setView(position * -1);
 }
 
+void Player::move(float deltaTime, gl::Vec2f newDir)
+{
+	gl::Vec2f prevDir = direction;
+	direction = newDir;
+	if(isCollision())
+	{
+		Character::move(deltaTime, prevDir * -1);
+		direction = prevDir;
+	}
+	else
+		Character::move(deltaTime, direction);
+}
+
+bool Player::isCollision()
+{
+	gl::Vec2i tilePosition(GLint(position.x / World::tileSize), GLint(position.y / World::tileSize));
+	std::vector<gl::Vec2i> testBounds;
+
+	if(direction == Movable::UP || direction == Movable::DOWN)
+		for(const auto& v : collisonBoundsV) testBounds.push_back(v + tilePosition);
+	else 
+		for(const auto& v : collisonBoundsH) testBounds.push_back(v + tilePosition);
+
+	return World::testCollosion(testBounds);
+}
+
+void Player::setCollision()
+{
+
+}
+
 
 void Player::setAnimations()
 {
@@ -55,6 +87,7 @@ void Player::setAnimations()
 	for(auto& a : drawMove) a.setPoint(position);
 	setDraw(drawStill);
 }
+
 
 
 
@@ -73,6 +106,14 @@ void Player::loadReferences()
 	refDrawStillMove[DOWN] = gl::Animation(bounds, folder + "/walk/down", 4, fr);
 	refDrawStillMove[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 4, fr);
 	refDrawStillMove[LEFT] = gl::Animation(bounds, folder + "/walk/left", 4, fr);
+
+	for(int i = -4; i <= 4; i++) collisonBoundsV.push_back(gl::Vec2i(i, -2));
+	for(int i = -2; i <= 2; i++) collisonBoundsV.push_back(gl::Vec2i(i, -3));
+	for(int i = -2; i <= 2; i++) collisonBoundsV.push_back(gl::Vec2i(i, -4));
+
+	for(int i = -2; i <= 2; i++) collisonBoundsH.push_back(gl::Vec2i(i, -2));
+	for(int i = -2; i <= 2; i++) collisonBoundsH.push_back(gl::Vec2i(i, -3));
+	for(int i = -2; i <= 2; i++) collisonBoundsH.push_back(gl::Vec2i(i, -4));
 }
 
 void Player::releaseReferences()

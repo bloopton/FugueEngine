@@ -24,7 +24,7 @@ public:
 	void draw();
 	void save();
 
-	static bool testCollsion(const gl::VertexArray&);
+	static bool testCollosion(const std::vector<gl::Vec2i>& tiles);
 
 private:
 	static World* currentWorld;

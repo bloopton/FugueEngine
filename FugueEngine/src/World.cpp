@@ -100,19 +100,9 @@ void World::draw()
 }
 
 
-bool World::testCollsion(const gl::VertexArray& rect)
+bool World::testCollosion(const std::vector<gl::Vec2i>& tiles)
 {    
-	std::vector<gl::Vec2u> tiles;
-	int xMax = int((rect.getPoint().x + rect.getSize().x / 2.0f) / tileSize);
-	int xMin = int((rect.getPoint().x - rect.getSize().x / 2.0f) / tileSize);
-	int yMax = int((rect.getPoint().y + rect.getSize().y / 2.0f) / tileSize);
-	int yMin = int((rect.getPoint().y - rect.getSize().y / 2.0f) / tileSize);
-
-	for(int x = xMin; x <= xMax; x++)
-		for(int y = yMin; y <= yMax; y++)
-			tiles.push_back(gl::Vec2u(x, y));
-
-	for(gl::Vec2u& v : tiles)
+	for(const gl::Vec2i& v : tiles)
 		if(World::currentWorld->tileMap[v.x][v.y].solid)
 			return true;
 

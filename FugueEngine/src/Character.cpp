@@ -18,20 +18,12 @@ void Character::setDraw(std::array<gl::Animation, 4>& animation)
 }
 
 
-void Character::move(float, gl::Vec2f newDir)
+void Character::move(float deltaTime, gl::Vec2f newDir)
 {
 	direction = newDir;
-	position += direction * speed;
+	gl::Vec2f distance = direction * speed * deltaTime;
+	position += distance;
+	if(isCollision()) position -= distance;
 
 	setDraw(drawMove);
-}
-
-void Character::testCollision(const gl::VertexArray&)
-{
-
-}
-
-void Character::setCollision(const gl::VertexArray&)
-{
-
 }

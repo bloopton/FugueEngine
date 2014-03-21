@@ -14,6 +14,9 @@ public:
 	Player();
 	static objPtr load(std::ifstream&);
 	virtual void save(std::ofstream&) const;
+	virtual void move(float, gl::Vec2f);
+	virtual bool isCollision();
+	virtual void setCollision();
 	virtual void update(float);
 
 	virtual void setAnimations();
