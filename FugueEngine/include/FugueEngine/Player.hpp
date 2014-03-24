@@ -20,6 +20,6 @@ protected:
 	virtual bool isCollision();
 	virtual void setCollision();
 	virtual void stand(float);
-	virtual void walk(float, Direction);
+	virtual void walk(float);
 };
 #endif

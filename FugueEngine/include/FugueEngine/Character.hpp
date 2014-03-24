@@ -24,22 +24,25 @@ protected:
 };
 
 
+
 //Character Behaviors
 class CanStand
 {
-public:
-	virtual ~CanStand() {}
 protected:
 	std::array<gl::Animation, 4> drawStand;
 	virtual void stand(float) = 0;
+public:
+	CanStand(const std::array<gl::Animation, 4>& ref) : drawStand(ref) {}
+	virtual ~CanStand() {}
 };
 
 class CanWalk
 {
-public:
-	virtual ~CanWalk() {}
 protected:
 	std::array<gl::Animation, 4> drawWalk;
-	virtual void walk(float, Character::Direction) = 0;
+	virtual void walk(float) = 0;
+public:
+	CanWalk(const std::array<gl::Animation, 4>& ref) : drawWalk(ref) {}
+	virtual ~CanWalk() {}
 };
 #endif

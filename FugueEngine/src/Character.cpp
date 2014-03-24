@@ -7,6 +7,7 @@ void Character::move(float deltaTime)
 {
 	gl::Vec2f distance = getVec(direction) * speed * deltaTime;
 	position += distance;
+	if(isCollision()) position -= distance;
 }
 
 gl::Vec2f Character::getVec(Direction dir)
