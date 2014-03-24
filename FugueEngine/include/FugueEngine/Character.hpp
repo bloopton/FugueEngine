@@ -2,26 +2,44 @@
 #define CHARACTER_HPP
 
 #include <FugueEngine\GameObject.hpp>
-#include <FugueEngine\Behaviors.hpp>
-#include <array>
 #include <fstream>
 #include <memory>
 #include <string>
+#include <array>
 
 class World;
 class Character : public GameObject, public Movable, public Collidable, public Loadable
 {
+public:
+	enum Direction { UP = 0, DOWN, RIGHT, LEFT };
+
 protected:
 	std::string name;
-	gl::Vec2f position, direction;
+	gl::Vec2f position;
+	Direction direction;
 	float speed;
 
-	enum Direction { UP = 0, DOWN, RIGHT, LEFT };
-	Direction getDirection();
-	std::array<gl::Animation, 4> drawStill, drawMove;
-	void setDraw(std::array<gl::Animation, 4>&);
+	virtual void move(float);
+	gl::Vec2f getVec(Direction);
+};
 
-	virtual void move(float, gl::Vec2f);
-	virtual void setAnimations() = 0;
+
+//Character Behaviors
+class CanStand
+{
+public:
+	virtual ~CanStand() {}
+protected:
+	std::array<gl::Animation, 4> drawStand;
+	virtual void stand(float) = 0;
+};
+
+class CanWalk
+{
+public:
+	virtual ~CanWalk() {}
+protected:
+	std::array<gl::Animation, 4> drawWalk;
+	virtual void walk(float, Character::Direction) = 0;
 };
 #endif

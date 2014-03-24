@@ -2,28 +2,31 @@
 #include <FugueEngine\Player.hpp>
 #include <fstream>
 
-Character::Direction Character::getDirection()
-{
-	if(direction == Movable::UP)		 return UP;
-	else if(direction == Movable::DOWN)  return DOWN;
-	else if(direction == Movable::RIGHT) return RIGHT; 
-	else   return LEFT;
-}
 
-void Character::setDraw(std::array<gl::Animation, 4>& animation)
+void Character::move(float deltaTime)
 {
-	gl::Animation* current = &animation[getDirection()];
-	current->setPoint(position);
-	currentDraw = current;
-}
-
-
-void Character::move(float deltaTime, gl::Vec2f newDir)
-{
-	direction = newDir;
-	gl::Vec2f distance = direction * speed * deltaTime;
+	gl::Vec2f distance = getVec(direction) * speed * deltaTime;
 	position += distance;
-	if(isCollision()) position -= distance;
+}
 
-	setDraw(drawMove);
+gl::Vec2f Character::getVec(Direction dir)
+{
+	switch (dir)
+	{
+	case Character::UP:
+		return gl::Vec2f(0, 1);
+		break;
+	case Character::DOWN:
+		return gl::Vec2f(0, -1);
+		break;
+	case Character::RIGHT:
+		return gl::Vec2f(1, 0);
+		break;
+	case Character::LEFT:
+		return gl::Vec2f(-1, 0);
+		break;
+	default:
+		return gl::Vec2f(0, 0);
+		break;
+	}
 }

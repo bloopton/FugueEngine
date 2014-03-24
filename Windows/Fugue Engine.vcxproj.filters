@@ -1,63 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Fugue">
+      <UniqueIdentifier>{49301df6-abc2-42ab-aefa-469a35471e09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Fugue\World">
+      <UniqueIdentifier>{869d5e99-ced8-490f-b20d-376536d8519a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Fugue\GameObject">
+      <UniqueIdentifier>{ce619e5a-4bda-4531-a1d9-91259969bf6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fugue\GameObject\Character">
+      <UniqueIdentifier>{a3fa190a-3f0b-4e57-9970-0da748023c68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\GameObject.hpp">
+      <Filter>Fugue\GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Character.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Segment.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\World.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\FugueCore.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Fugue\GameObject\Character</Filter>
     </ClInclude>
     <ClInclude Include="..\FugueEngine\include\FugueEngine\Player.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Fugue\GameObject\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\Behaviors.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Villager.hpp">
+      <Filter>Fugue\GameObject\Character</Filter>
     </ClInclude>
-    <ClInclude Include="..\FugueEngine\include\FugueEngine\GameObject.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\World.hpp">
+      <Filter>Fugue\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\Segment.hpp">
+      <Filter>Fugue\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FugueEngine\include\FugueEngine\FugueCore.hpp">
+      <Filter>Fugue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FugueEngine\src\Character.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FugueEngine\src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FugueEngine\src\Segment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FugueEngine\src\World.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Fugue\GameObject\Character</Filter>
     </ClCompile>
     <ClCompile Include="..\FugueEngine\src\Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Fugue\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\Villager.cpp">
+      <Filter>Fugue\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\World.cpp">
+      <Filter>Fugue\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\Segment.cpp">
+      <Filter>Fugue\World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FugueEngine\src\main.cpp">
+      <Filter>Fugue</Filter>
     </ClCompile>
     <ClCompile Include="..\FugueEngine\src\FugueCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FugueEngine\src\Behaviors.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Fugue</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

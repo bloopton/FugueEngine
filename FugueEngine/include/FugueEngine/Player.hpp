@@ -5,20 +5,21 @@
 #include <SFML\Window.hpp>
 #include <fstream>
 
-class Player : public Character
+class Player : public Character, public CanStand, public CanWalk
 {
 public:
-	static void loadReferences();
-	static void releaseReferences();
-
 	Player();
 	static objPtr load(std::ifstream&);
 	virtual void save(std::ofstream&) const;
-	virtual void move(float, gl::Vec2f);
-	virtual bool isCollision();
-	virtual void setCollision();
 	virtual void update(float);
 
-	virtual void setAnimations();
+	static void loadReferences();
+	static void releaseReferences();
+
+protected:
+	virtual bool isCollision();
+	virtual void setCollision();
+	virtual void stand(float);
+	virtual void walk(float, Direction);
 };
 #endif

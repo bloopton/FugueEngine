@@ -1,7 +1,7 @@
 #include <FugueEngine\World.hpp>
 #include <FugueEngine\Character.hpp>
 #include <FugueEngine\Player.hpp>
-#include <FugueEngine\Behaviors.hpp>
+#include <FugueEngine\Villager.hpp>
 #include <iostream>
 #include <fstream>
 #include <math.h>
@@ -37,6 +37,7 @@ void World::loadGameObjects()
 		objPtr newObj = NULL;
 		std::string type; stream >> type;
 		if(type.compare("Player") == 0) newObj = Player::load(stream);
+		if(type.compare("Villager") == 0) newObj = Villager::load(stream);
 
 		if(newObj == NULL) loading = false;
 		else gameObjects.push_back(std::move(newObj));

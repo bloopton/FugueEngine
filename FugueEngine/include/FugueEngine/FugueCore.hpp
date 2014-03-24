@@ -6,6 +6,7 @@
 #include<SFML\Window.hpp>
 
 #include<FugueEngine\Character.hpp>
+#include<FugueEngine\Villager.hpp>
 #include<FugueEngine\Player.hpp>
 #include<FugueEngine\Segment.hpp>
 #include<FugueEngine\World.hpp>
