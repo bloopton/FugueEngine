@@ -9,11 +9,13 @@ class GameObject
 {
 private:
 	const gl::Drawable* currentDraw;
+protected:
+	void setDraw(const gl::Drawable& newDraw) {currentDraw = &newDraw;}
 public:
 	void draw() const {currentDraw->draw();}
-	void setDraw(const gl::Drawable& newDraw) {currentDraw = &newDraw;}
 	virtual void update(float) = 0;
 	virtual ~GameObject() {}
+
 };
 typedef std::unique_ptr<GameObject> objPtr;
 
@@ -25,7 +27,7 @@ class Movable
 public:
 	virtual ~Movable() {};
 protected:
-	virtual void move(float) = 0;
+	virtual void move(float, gl::Vec2f) = 0;
 };
 
 class Collidable
@@ -33,7 +35,6 @@ class Collidable
 public:
 	virtual ~Collidable() {};
 protected:
-	virtual bool isCollision() = 0;
 	virtual void setCollision() = 0;
 };
 
@@ -43,6 +44,9 @@ public:
 	static objPtr load(std::ifstream&);
 	virtual void save(std::ofstream&) const = 0;
 	virtual ~Loadable() {}
+protected:
+	virtual void loadInternal(std::ifstream&) = 0;
+	virtual void saveInternal(std::ofstream&) const = 0;
 };
 
 #endif

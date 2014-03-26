@@ -14,13 +14,20 @@ public:
 	enum Direction { UP = 0, DOWN, RIGHT, LEFT };
 
 protected:
+	virtual void saveInternal(std::ofstream&) const;
+	virtual void loadInternal(std::ifstream&);
+	virtual void move(float, gl::Vec2f);
+	gl::Vec2f getPosition();
+	Direction getDirection();
+	void setDirection(Direction);
+	gl::Vec2f getDirectionVec();
+	gl::Vec2f getDirectionVec(Direction);
+
+private:
 	std::string name;
 	gl::Vec2f position;
 	Direction direction;
 	float speed;
-
-	virtual void move(float);
-	gl::Vec2f getVec(Direction);
 };
 
 

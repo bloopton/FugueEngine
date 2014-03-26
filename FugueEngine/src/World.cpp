@@ -37,7 +37,7 @@ void World::loadGameObjects()
 		objPtr newObj = NULL;
 		std::string type; stream >> type;
 		if(type.compare("Player") == 0) newObj = Player::load(stream);
-		if(type.compare("Villager") == 0) newObj = Villager::load(stream);
+		//if(type.compare("Villager") == 0) newObj = Villager::load(stream);
 
 		if(newObj == NULL) loading = false;
 		else gameObjects.push_back(std::move(newObj));
@@ -101,9 +101,13 @@ void World::draw()
 }
 
 
-bool World::testCollosion(const std::vector<gl::Vec2i>& tiles)
+bool World::isCollosion(const std::vector<gl::Vec2i>& tiles, gl::Vec2f position)
 {    
-	for(const gl::Vec2i& v : tiles)
+	gl::Vec2i tilePos = gl::Vec2i((position.x/World::tileSize) + .5, (position.y/World::tileSize) + .5);
+	std::vector<gl::Vec2i> testTiles;
+	for(const auto& i : tiles) testTiles.push_back(i + tilePos);
+
+	for(const gl::Vec2i& v : testTiles)
 		if(World::currentWorld->tileMap[v.x][v.y].solid)
 			return true;
 

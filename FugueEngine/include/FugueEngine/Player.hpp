@@ -17,7 +17,6 @@ public:
 	static void releaseReferences();
 
 protected:
-	virtual bool isCollision();
 	virtual void setCollision();
 	virtual void stand(float);
 	virtual void walk(float);

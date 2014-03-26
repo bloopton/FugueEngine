@@ -13,7 +13,7 @@ void genWindow(sf::Window* window)
 void loadReferences()
 {
 	Player::loadReferences();
-	Villager::loadReferences();
+	//Villager::loadReferences();
 }
 
 void releseReferences()

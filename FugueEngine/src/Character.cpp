@@ -3,14 +3,52 @@
 #include <fstream>
 
 
-void Character::move(float deltaTime)
+void Character::loadInternal(std::ifstream& stream)
 {
-	gl::Vec2f distance = getVec(direction) * speed * deltaTime;
-	position += distance;
-	if(isCollision()) position -= distance;
+	stream >> name;
+	stream >> position.x;
+	stream >> position.y;
+	int dir; stream >> dir; direction = (Direction)dir;
+	stream >> speed;
 }
 
-gl::Vec2f Character::getVec(Direction dir)
+void Character::saveInternal(std::ofstream& stream) const
+{
+	stream << name << std::endl;
+	stream << position.x << std::endl;
+	stream << position.y << std::endl;
+	stream << direction << std::endl;
+	stream << speed << std::endl;
+}
+
+
+void Character::move(float deltaTime, gl::Vec2f dir)
+{
+	position += dir * speed * deltaTime;
+}
+
+
+gl::Vec2f Character::getPosition()
+{
+	return position;
+}
+
+Character::Direction Character::getDirection()
+{
+	return direction;
+}
+
+void Character::setDirection(Direction newDir)
+{
+	direction = newDir;
+}
+
+gl::Vec2f Character::getDirectionVec()
+{
+	return getDirectionVec(direction);
+}
+
+gl::Vec2f Character::getDirectionVec(Direction dir)
 {
 	switch (dir)
 	{
