@@ -52,7 +52,7 @@ void Player::update(float deltaTime)
 	}
 	else stand(deltaTime);
 
-	gl::setView(getPosition() * -1);
+	gl::View::setPosition(getPosition() * -1);
 }
 
 
@@ -104,7 +104,7 @@ void Player::setCollision()
 
 void Player::loadReferences()
 {
-	gl::Rectangle bounds(gl::Vec2f(World::tileSize * 8), World::tileSize * 8);
+	gl::Rectangle bounds(0, World::tileSize * 8);
 	std::string folder = "resources/characters/robot";
 	int fr = 550;
 
@@ -136,6 +136,11 @@ void Player::loadReferences()
 		for(int y = 2; y < 3; y++) topBounds.push_back(gl::Vec2i(x, y));
 	for(int x = 2; x < 6; x++)
 		for(int y = -1; y < 2; y++) bottomBounds.push_back(gl::Vec2i(x, y));
+
+	for(auto& a : leftBounds) a -= 4;
+	for(auto& a : rightBounds) a -= 4;
+	for(auto& a : topBounds) a -= 4;
+	for(auto& a : bottomBounds) a -= 4;
 }
 
 void Player::releaseReferences()

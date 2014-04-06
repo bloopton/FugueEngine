@@ -7,6 +7,7 @@ namespace
 	gl::Vec2f gridPosition(const gl::Vec2u& index)
 	{
 		gl::Vec2f pos(GLfloat(World::scale * index.x), GLfloat(World::scale * index.y));
+		pos += GLfloat(World::scale / 2);
 		return pos;
 	}
 }

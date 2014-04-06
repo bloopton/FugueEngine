@@ -7,7 +7,8 @@ void genWindow(sf::Window* window)
 	window->create(video, "Fugue");
 
 	gl::ooglInit();
-	gl::setAspectRatio(gl::Vec2u(video.width, video.height));
+	gl::View::setAspectRatio(gl::Vec2u(video.width, video.height));
+	window->setVerticalSyncEnabled(true);
 }
 
 void loadReferences()
