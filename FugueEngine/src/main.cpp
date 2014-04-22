@@ -20,7 +20,7 @@ int main()
 		float deltaTime = clock.getElapsedTime().asMilliseconds() - time;
 		time = float(clock.getElapsedTime().asMilliseconds());
 
-		gl::View::setColor(gl::Vec3f(-.5, -.2, 0));
+		
 
 		world.update(deltaTime);
 		world.draw();
