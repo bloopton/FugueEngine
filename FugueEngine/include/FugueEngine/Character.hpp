@@ -43,13 +43,26 @@ public:
 	virtual ~CanStand() {}
 };
 
-class CanWalk
+class CanWalk : public CanStand
 {
 protected:
 	std::array<gl::Animation, 4> drawWalk;
 	virtual void walk(float) = 0;
 public:
-	CanWalk(const std::array<gl::Animation, 4>& ref) : drawWalk(ref) {}
+	CanWalk(const std::array<gl::Animation, 4>& sRef, 
+			const std::array<gl::Animation, 4>& ref	) : CanStand(sRef), drawWalk(ref) {}
 	virtual ~CanWalk() {}
+};
+
+class CanRun : public CanWalk
+{
+protected:
+	std::array<gl::Animation, 4> drawRun;
+	virtual void run(float) = 0;
+public:
+	CanRun(	const std::array<gl::Animation, 4>& sRef,
+			const std::array<gl::Animation, 4>& wRef,
+			const std::array<gl::Animation, 4>& ref	) : CanWalk(sRef, wRef), drawRun(ref) {}
+	virtual ~CanRun() {}
 };
 #endif

@@ -4,10 +4,10 @@
 #include <iostream>
 #include <fstream>
 
-static std::array<gl::Animation, 4> refDrawStand, refDrawWalk; 
+static std::array<gl::Animation, 4> refDrawStand, refDrawWalk, refDrawRun; 
 static std::vector<gl::Vec2i> topBounds, bottomBounds, leftBounds, rightBounds;
 
-Player::Player() : CanStand(refDrawStand), CanWalk(refDrawWalk) 
+Player::P/layer() : CanRun(refDrawStand, refDrawWalk, refDrawRun)
 {
 	setDraw(drawStand[UP]);
 }
@@ -108,16 +108,16 @@ void Player::loadReferences()
 	std::string folder = "resources/characters/robot";
 	int fr = 550;
 
-	refDrawStand[UP] = gl::Animation(bounds, folder + "/stand/up", 1, fr);
-	refDrawStand[DOWN] = gl::Animation(bounds, folder + "/stand/down", 1, fr);
-	refDrawStand[RIGHT] = gl::Animation(bounds, folder + "/stand/right", 1, fr);
-	refDrawStand[LEFT] = gl::Animation(bounds, folder + "/stand/left", 1, fr);
+	refDrawStand[UP] = gl::Animation(bounds, folder + "/stand/up", 2, fr);
+	refDrawStand[DOWN] = gl::Animation(bounds, folder + "/stand/down", 2, fr);
+	refDrawStand[RIGHT] = gl::Animation(bounds, folder + "/stand/right", 2, fr);
+	refDrawStand[LEFT] = gl::Animation(bounds, folder + "/stand/left", 2, fr);
 	for(auto& a : refDrawStand) a.run();
 
-	refDrawWalk[UP] = gl::Animation(bounds, folder + "/walk/up", 4, fr);
-	refDrawWalk[DOWN] = gl::Animation(bounds, folder + "/walk/down", 4, fr);
-	refDrawWalk[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 4, fr);
-	refDrawWalk[LEFT] = gl::Animation(bounds, folder + "/walk/left", 4, fr);
+	refDrawWalk[UP] = gl::Animation(bounds, folder + "/walk/up", 8, fr);
+	refDrawWalk[DOWN] = gl::Animation(bounds, folder + "/walk/down", 8, fr);
+	refDrawWalk[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 8, fr);
+	refDrawWalk[LEFT] = gl::Animation(bounds, folder + "/walk/left", 8, fr);
 	for(auto& a : refDrawWalk) a.run();
 
 

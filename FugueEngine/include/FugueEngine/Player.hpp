@@ -5,7 +5,7 @@
 #include <SFML\Window.hpp>
 #include <fstream>
 
-class Player : public Character, public CanStand, public CanWalk
+class Player : public Character, public CanRun
 {
 public:
 	Player();
@@ -20,5 +20,6 @@ protected:
 	virtual void setCollision();
 	virtual void stand(float);
 	virtual void walk(float);
+	virtual void run(float);
 };
 #endif
