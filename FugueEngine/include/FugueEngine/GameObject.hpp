@@ -22,14 +22,6 @@ typedef std::unique_ptr<GameObject> objPtr;
 
 
 //Game Object Behaviors
-class Movable
-{
-public:
-	virtual ~Movable() {};
-protected:
-	virtual void move(float, gl::Vec2f) = 0;
-};
-
 class Collidable
 {
 public:

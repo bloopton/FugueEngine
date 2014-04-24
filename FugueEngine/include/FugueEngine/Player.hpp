@@ -5,7 +5,7 @@
 #include <SFML\Window.hpp>
 #include <fstream>
 
-class Player : public Character, public CanRun
+class Player : public Character, public CanStand, public CanWalk, public CanRun
 {
 public:
 	Player();
@@ -21,5 +21,8 @@ protected:
 	virtual void stand(float);
 	virtual void walk(float);
 	virtual void run(float);
+
+	AnimateSet drawStand, drawWalk, drawRun;
+	float speed;
 };
 #endif

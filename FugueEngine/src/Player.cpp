@@ -4,12 +4,13 @@
 #include <iostream>
 #include <fstream>
 
-static std::array<gl::Animation, 4> refDrawStand, refDrawWalk, refDrawRun; 
+static AnimateSet refDrawStand, refDrawWalk, refDrawRun; 
 static std::vector<gl::Vec2i> topBounds, bottomBounds, leftBounds, rightBounds;
 
-Player::P/layer() : CanRun(refDrawStand, refDrawWalk, refDrawRun)
+Player::Player() : drawStand(refDrawStand), drawWalk(refDrawWalk)
 {
 	setDraw(drawStand[UP]);
+	speed = .0004;
 }
 
 
@@ -30,25 +31,32 @@ void Player::save(std::ofstream& stream) const
 
 void Player::update(float deltaTime)
 {
+	bool moves = false;
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		setDirection(UP);
-		walk (deltaTime);
+		moves = true;
 	}
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		setDirection(DOWN);
-		walk (deltaTime);
+		moves = true;
 	}
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		setDirection(RIGHT);
-		walk (deltaTime);
+		moves = true;
 	}
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		setDirection(LEFT);
-		walk (deltaTime);
+		moves = true;
+	}
+
+	if(moves == true)
+	{
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) run(deltaTime);
+		else walk(deltaTime);
 	}
 	else stand(deltaTime);
 
@@ -64,7 +72,7 @@ void Player::stand(float deltaTime)
 
 void Player::walk(float deltaTime)
 {
-	move(deltaTime, getDirectionVec());
+	move(deltaTime, speed, getDirectionVec());
 	
 	if(getDirection() == UP || getDirection() == DOWN)
 	{
@@ -72,9 +80,9 @@ void Player::walk(float deltaTime)
 		bool rightC = World::isCollosion(rightBounds, getPosition());
 		if(leftC || rightC) 
 		{
-			move(deltaTime, getDirectionVec() * -1);
-			if(leftC && !rightC) move(deltaTime, getDirectionVec(RIGHT));
-			if(rightC && !leftC) move(deltaTime, getDirectionVec(LEFT));
+			move(deltaTime, speed, getDirectionVec() * -1);
+			if(leftC && !rightC) move(deltaTime, speed, getDirectionVec(RIGHT));
+			if(rightC && !leftC) move(deltaTime, speed, getDirectionVec(LEFT));
 		}
 	}
 	else if(getDirection() == LEFT || getDirection() == RIGHT)
@@ -84,17 +92,46 @@ void Player::walk(float deltaTime)
 
 		if(topC || bottomC) 
 		{
-			move(deltaTime, getDirectionVec() * -1);
-			if(topC && !bottomC) move(deltaTime, getDirectionVec(DOWN));
-			if(bottomC && !topC) move(deltaTime, getDirectionVec(UP));
+			move(deltaTime, speed, getDirectionVec() * -1);
+			if(topC && !bottomC) move(deltaTime, speed, getDirectionVec(DOWN));
+			if(bottomC && !topC) move(deltaTime, speed, getDirectionVec(UP));
 		}
 	}
-
-
 	drawWalk[getDirection()].setPosition(getPosition());
 	setDraw(drawWalk[getDirection()]);
 }
 
+
+void Player::run(float deltaTime)
+{
+	move(deltaTime, speed * 2, getDirectionVec());
+	
+	if(getDirection() == UP || getDirection() == DOWN)
+	{
+		bool leftC = World::isCollosion(leftBounds, getPosition());
+		bool rightC = World::isCollosion(rightBounds, getPosition());
+		if(leftC || rightC) 
+		{
+			move(deltaTime, speed * 2, getDirectionVec() * -1);
+			if(leftC && !rightC) move(deltaTime, speed * 2, getDirectionVec(RIGHT));
+			if(rightC && !leftC) move(deltaTime, speed * 2, getDirectionVec(LEFT));
+		}
+	}
+	else if(getDirection() == LEFT || getDirection() == RIGHT)
+	{
+		bool topC = World::isCollosion(topBounds, getPosition());
+		bool bottomC = World::isCollosion(bottomBounds, getPosition());
+
+		if(topC || bottomC) 
+		{
+			move(deltaTime, speed * 2, getDirectionVec() * -1);
+			if(topC && !bottomC) move(deltaTime, speed * 2, getDirectionVec(DOWN));
+			if(bottomC && !topC) move(deltaTime, speed * 2, getDirectionVec(UP));
+		}
+	}
+	drawWalk[getDirection()].setPosition(getPosition());
+	setDraw(drawWalk[getDirection()]);
+}
 
 void Player::setCollision()
 {
@@ -106,7 +143,7 @@ void Player::loadReferences()
 {
 	gl::Rectangle bounds(0, World::tileSize * 8);
 	std::string folder = "resources/characters/robot";
-	int fr = 550;
+	int fr = 650;
 
 	refDrawStand[UP] = gl::Animation(bounds, folder + "/stand/up", 2, fr);
 	refDrawStand[DOWN] = gl::Animation(bounds, folder + "/stand/down", 2, fr);
@@ -119,6 +156,13 @@ void Player::loadReferences()
 	refDrawWalk[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 8, fr);
 	refDrawWalk[LEFT] = gl::Animation(bounds, folder + "/walk/left", 8, fr);
 	for(auto& a : refDrawWalk) a.run();
+
+	int runFR = 500;
+	refDrawRun[UP] = gl::Animation(bounds, folder + "/walk/up", 8, runFR);
+	refDrawRun[DOWN] = gl::Animation(bounds, folder + "/walk/down", 8, runFR);
+	refDrawRun[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 8, runFR);
+	refDrawRun[LEFT] = gl::Animation(bounds, folder + "/walk/left", 8, runFR);
+	for(auto& a : refDrawRun) a.run();
 
 
 	leftBounds.push_back(gl::Vec2i(0, 2));

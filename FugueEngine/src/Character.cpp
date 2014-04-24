@@ -9,7 +9,6 @@ void Character::loadInternal(std::ifstream& stream)
 	stream >> position.x;
 	stream >> position.y;
 	int dir; stream >> dir; direction = (Direction)dir;
-	stream >> speed;
 }
 
 void Character::saveInternal(std::ofstream& stream) const
@@ -18,11 +17,10 @@ void Character::saveInternal(std::ofstream& stream) const
 	stream << position.x << std::endl;
 	stream << position.y << std::endl;
 	stream << direction << std::endl;
-	stream << speed << std::endl;
 }
 
 
-void Character::move(float deltaTime, gl::Vec2f dir)
+void Character::move(float deltaTime, float speed, gl::Vec2f dir)
 {
 	position += dir * speed * deltaTime;
 }
