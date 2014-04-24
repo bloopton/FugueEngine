@@ -10,7 +10,7 @@ static std::vector<gl::Vec2i> topBounds, bottomBounds, leftBounds, rightBounds;
 Player::Player() : drawStand(refDrawStand), drawWalk(refDrawWalk)
 {
 	setDraw(drawStand[UP]);
-	speed = .0004;
+	speed = .0002;
 }
 
 
@@ -157,7 +157,7 @@ void Player::loadReferences()
 	refDrawWalk[LEFT] = gl::Animation(bounds, folder + "/walk/left", 8, fr);
 	for(auto& a : refDrawWalk) a.run();
 
-	int runFR = 500;
+	int runFR = 400;
 	refDrawRun[UP] = gl::Animation(bounds, folder + "/walk/up", 8, runFR);
 	refDrawRun[DOWN] = gl::Animation(bounds, folder + "/walk/down", 8, runFR);
 	refDrawRun[RIGHT] = gl::Animation(bounds, folder + "/walk/right", 8, runFR);
